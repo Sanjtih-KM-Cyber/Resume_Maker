@@ -887,6 +887,21 @@ const NeoBrutalismTemplate = ({ data }: { data: ResumeData }) => (
   </Page>
 );
 
+import { 
+  ModernNavySidebar, 
+  CreativeTealSplit, 
+  ExecutiveGoldAccent, 
+  EmeraldTechGrid, 
+  CorporateSlate, 
+  WarmAmber, 
+  RoyalPurple, 
+  MinimalistCrimson, 
+  VibrantAzure, 
+  CoralAccent, 
+  MonochromeMinimal, 
+  ForestGreenStructure 
+} from './TemplateModernDeck';
+
 export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templateId: TemplateId }) => {
   return (
     <Document wrap={true}>
@@ -914,6 +929,20 @@ export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templat
       
       {templateId === 'academic-cv' && <AcademicCvTemplate data={data} />}
       {templateId === 'portfolio-link-grid' && <CleanGridTemplate data={data} />}
+
+      {/* 12 New Modern Deck Themes */}
+      {templateId === 'modern-navy-sidebar' && <ModernNavySidebar data={data} />}
+      {templateId === 'creative-teal-split' && <CreativeTealSplit data={data} />}
+      {templateId === 'executive-gold-accent' && <ExecutiveGoldAccent data={data} />}
+      {templateId === 'emerald-tech-grid' && <EmeraldTechGrid data={data} />}
+      {templateId === 'corporate-slate' && <CorporateSlate data={data} />}
+      {templateId === 'warm-amber' && <WarmAmber data={data} />}
+      {templateId === 'royal-purple' && <RoyalPurple data={data} />}
+      {templateId === 'minimalist-crimson' && <MinimalistCrimson data={data} />}
+      {templateId === 'vibrant-azure' && <VibrantAzure data={data} />}
+      {templateId === 'coral-accent' && <CoralAccent data={data} />}
+      {templateId === 'monochrome-minimal' && <MonochromeMinimal data={data} />}
+      {templateId === 'forest-green-structure' && <ForestGreenStructure data={data} />}
     </Document>
   );
 };

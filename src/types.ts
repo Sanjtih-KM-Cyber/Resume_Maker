@@ -73,7 +73,19 @@ export type TemplateId =
   | 'corporate-pic'
   | 'hybrid-sidebar'
   | 'academic-cv'
-  | 'portfolio-link-grid';
+  | 'portfolio-link-grid'
+  | 'modern-navy-sidebar'
+  | 'creative-teal-split'
+  | 'executive-gold-accent'
+  | 'emerald-tech-grid'
+  | 'corporate-slate'
+  | 'warm-amber'
+  | 'royal-purple'
+  | 'minimalist-crimson'
+  | 'vibrant-azure'
+  | 'coral-accent'
+  | 'monochrome-minimal'
+  | 'forest-green-structure';
 
 export interface InterviewCompany {
   companyName: string;

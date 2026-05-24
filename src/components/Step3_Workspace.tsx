@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ResumeData, TemplateId } from '../types';
 import { TemplatePicker } from './TemplatePicker';
 import { ResumeDocument } from '../utils/pdfTemplates';
-import { Download, Check, X, Sparkles, Send, Loader2, Undo2, Redo2, FileText, Trash2 } from 'lucide-react';
+import { Download, Check, X, Sparkles, Send, Loader2, Undo2, Redo2, FileText, Trash2, Mail, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PdfLivePreview } from './PdfLivePreview';
 import { BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
 import { MetricsSheet } from './MetricsSheet';
-import { CoverLetterModal } from './CoverLetterModal';
 import { LinkedInSync } from './LinkedInSync';
 import { BuzzwordRadar } from './BuzzwordRadar';
+import ReactMarkdown from 'react-markdown';
 
 interface Step3Props {
   initialData: ResumeData;
@@ -27,7 +27,7 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
     }
   }));
   const [template, setTemplate] = useState<TemplateId>('reverse-chronological');
-  const [activeTab, setActiveTab] = useState<'details' | 'templates'>('details');
+  const [activeTab, setActiveTab] = useState<'details' | 'templates' | 'outreach'>('details');
 
   // Copilot State
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
@@ -49,6 +49,12 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
   const [historyIndex, setHistoryIndex] = useState(0);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
   const isTraveling = useRef(false);
+
+  // Outreach Copilot State
+  const [outreachType, setOutreachType] = useState<'linkedin' | 'email'>('linkedin');
+  const [targetJobDescription, setTargetJobDescription] = useState('');
+  const [isGeneratingOutreach, setIsGeneratingOutreach] = useState(false);
+  const [outreachResult, setOutreachResult] = useState('');
 
   const pushToHistory = (newData: ResumeData) => {
     if (isTraveling.current) return;
@@ -154,8 +160,39 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
     }
   };
 
-  // Cover Letter State
-  const [isCoverLetterOpen, setIsCoverLetterOpen] = useState(false);
+  const handleGenerateOutreach = async () => {
+    setIsGeneratingOutreach(true);
+    setOutreachResult('');
+    try {
+      const response = await fetch('/api/generate-outreach', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resumeData: {
+            name: data.contactInfo.fullName,
+            targetTitle: data.contactInfo.targetTitle,
+            coreExpertise: data.skills.coreExpertise,
+            technicalTools: data.skills.technicalTools,
+            methodologies: data.skills.methodologies,
+            // Simple mapping for top 3 metrics (we just join top bullets)
+            topMetrics: data.workExperience.map(w => w.bullets).flat().slice(0, 3) 
+          },
+          targetJobDescription,
+          outreachType
+        }),
+      });
+      if (!response.ok) throw new Error('Failed to generate outreach');
+      const result = await response.json();
+      setOutreachResult(result.pitch || result.message);
+    } catch (e) {
+      console.error(e);
+      setOutreachResult('Failed to generate pitch. Please try again.');
+    } finally {
+      setIsGeneratingOutreach(false);
+    }
+  };
 
   const handleCopilotSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -336,6 +373,12 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
             >
               Change Template
             </button>
+            <button 
+              onClick={() => setActiveTab('outreach')}
+              className={`flex-1 py-4 text-sm font-semibold transition-colors ${activeTab === 'outreach' ? 'border-b-2 border-indigo-600 text-indigo-700 dark:text-indigo-400' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+            >
+              Outreach Copilot
+            </button>
           </div>
           <div className="flex items-center gap-1 pr-4">
             <button 
@@ -361,6 +404,57 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
           {activeTab === 'templates' ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <TemplatePicker selected={template} onSelect={setTemplate} />
+            </motion.div>
+          ) : activeTab === 'outreach' ? (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+              <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-indigo-100 dark:border-indigo-900/50 shadow-sm border-t-4 border-t-indigo-600">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 mb-4">Outreach Settings</h3>
+                
+                <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 mb-6">
+                  <button
+                    onClick={() => setOutreachType('linkedin')}
+                    className={`flex-1 py-2 text-sm font-medium rounded-md flex items-center justify-center gap-2 transition-all ${outreachType === 'linkedin' ? 'bg-white dark:bg-slate-700 shadow text-indigo-700 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    💬 LinkedIn DM
+                  </button>
+                  <button
+                    onClick={() => setOutreachType('email')}
+                    className={`flex-1 py-2 text-sm font-medium rounded-md flex items-center justify-center gap-2 transition-all ${outreachType === 'email' ? 'bg-white dark:bg-slate-700 shadow text-indigo-700 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  >
+                    <Mail className="w-4 h-4" />
+                    ✉️ Cold Email
+                  </button>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Target Job Description</label>
+                  <textarea
+                    value={targetJobDescription}
+                    onChange={(e) => setTargetJobDescription(e.target.value)}
+                    placeholder="Paste the job requirements here..."
+                    className="w-full text-sm p-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 h-32 resize-y"
+                  />
+                </div>
+
+                <button
+                  onClick={handleGenerateOutreach}
+                  disabled={isGeneratingOutreach || !targetJobDescription.trim()}
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isGeneratingOutreach ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
+                  Generate Pitch
+                </button>
+              </div>
+
+              {outreachResult && (
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative">
+                  <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-3">Generated Pitch</h3>
+                  <div className="prose prose-sm dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-100 dark:border-slate-800">
+                    <ReactMarkdown>{outreachResult}</ReactMarkdown>
+                  </div>
+                </div>
+              )}
             </motion.div>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
@@ -535,13 +629,6 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
                 </button>
               )}
             </PDFDownloadLink>
-            <button 
-              onClick={() => setIsCoverLetterOpen(true)}
-              className="flex-1 bg-white hover:bg-slate-50 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white border border-slate-300 dark:border-slate-600 font-semibold shadow-md py-3 rounded-xl flex items-center justify-center gap-2 transition-all h-full"
-            >
-              <FileText className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-              Generate Cover Letter
-            </button>
           </div>
         </div>
       </div>
@@ -642,11 +729,6 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
           )}
         </AnimatePresence>
       </div>
-      <CoverLetterModal 
-        isOpen={isCoverLetterOpen} 
-        onClose={() => setIsCoverLetterOpen(false)} 
-        resumeData={data} 
-      />
     </div>
   );
 };

@@ -336,22 +336,55 @@ Return a JSON array of 5 strings.`;
     }
   });
 
-  // API Route: Cover Letter Generator
-  app.post("/api/cover-letter", async (req, res) => {
+  // API Route: Outreach Generator
+  app.post("/api/generate-outreach", async (req, res) => {
     try {
-      const { resumeData, targetRole } = req.body;
-      if (!resumeData) return res.status(400).json({ error: "Missing resumeData" });
+      const { resumeData, targetJobDescription, outreachType } = req.body;
+      if (!resumeData || !targetJobDescription) return res.status(400).json({ error: "Missing required fields" });
 
-      const prompt = `You are an expert career coach. Write a perfectly tailored, beautifully formatted 1-page corporate cover letter based on this resume JSON data for the target role of "${targetRole || 'Professional'}".
-Write it in plain text, using professional spacing (not markdown). Do not include placeholder text like [Company Name], use a generic but professional opening, and do not use placeholders for date.
-Resume Data:
-${JSON.stringify(resumeData, null, 2)}`;
+      let prompt = '';
+      if (outreachType === 'linkedin') {
+        prompt = `You are an expert tech recruiter and networking strategist. Write a highly optimized Cold LinkedIn DM based on this user's resume data matching the provided Target Job Description.
+CRITICAL CONSTRAINTS:
+1. MAX BUDGET: 600 characters total. It must be extremely punchy.
+2. Skip formal greeting blocks. Do NOT use "Dear [Name]" or "Hi [Name],". Start immediately.
+3. Lead with a punchy 1-sentence hook connecting the user's background to the company's product space.
+4. Highlight EXACTLY 1 standout percentage metric from the user's top achievements. Do not flood with stats.
+5. End with a very brief, low-friction call-to-action to connect or chat.
+
+User Name: ${resumeData.name}
+Target Role: ${resumeData.targetTitle}
+Top Metrics: ${JSON.stringify(resumeData.topMetrics)}
+Core Expertise: ${JSON.stringify(resumeData.coreExpertise)}
+Technical Tools: ${JSON.stringify(resumeData.technicalTools)}
+
+Target Job Description:
+${targetJobDescription}`;
+      } else {
+        prompt = `You are an expert executive sales representative and tech recruiter. Write a highly optimized Cold Email Pitch based on this user's resume data matching the provided Target Job Description.
+CRITICAL CONSTRAINTS:
+1. Optimized for a 150-word scannable framework.
+2. Must generate an attention-grabbing subject line in this format format: "[Core Value Prop] / [Skill] Strategy — ${resumeData.name}" (e.g., "P2P Process Optimization / Systems Automation Strategy — ${resumeData.name}"). Put the subject line as the very first line starting with "Subject: ".
+3. Include a personalized greeting (e.g. "Hi team," or "Hi [Hiring Manager],").
+4. Formulate a high-impact 3-bullet matrix of achievements derived from the user's top metrics. Do not use more than 3 bullets.
+5. Provide a direct call-to-action requesting a brief sync.
+6. Make it crisp, executive, and highly readable.
+
+User Name: ${resumeData.name}
+Target Role: ${resumeData.targetTitle}
+Top Metrics: ${JSON.stringify(resumeData.topMetrics)}
+Core Expertise: ${JSON.stringify(resumeData.coreExpertise)}
+Technical Tools: ${JSON.stringify(resumeData.technicalTools)}
+
+Target Job Description:
+${targetJobDescription}`;
+      }
 
       const response = await ai.models.generateContent({
         model: "gemini-3.1-flash-lite",
         contents: prompt,
       });
-      res.json({ coverLetter: response.text });
+      res.json({ pitch: response.text });
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });
