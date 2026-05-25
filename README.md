@@ -2,7 +2,7 @@
 
 # 🚀 ResumeAI
 
-### *The Hyper-Focused ATS Optimization Engine powered by Gemini 3.1 Flash-Lite, Express, and React 19.*
+### *The Hyper-Focused ATS Optimization Engine powered by Groq 3.1 Flash-Lite, Express, and React 19.*
 
 [![React 19](https://img.shields.io/badge/React-19.0.1-blue?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
 [![Tailwind CSS v4](https://img.shields.io/badge/TailwindCSS-v4.1.14-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 <br />
 [![Express API](https://img.shields.io/badge/Express_Server-4.21.2-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Gemini 3.1](https://img.shields.io/badge/Gemini_3.1--Flash--Lite-GenAI_2.4-F4B400?style=for-the-badge&logo=google-gemini&logoColor=white)](https://ai.google.dev/)
+[![Groq 3.1](https://img.shields.io/badge/Groq_3.1--Flash--Lite-GenAI_2.4-F4B400?style=for-the-badge&logo=google-gemini&logoColor=white)](https://ai.google.dev/)
 [![Bundler](https://img.shields.io/badge/Esbuild-0.25.0-FFCF00?style=for-the-badge&logo=esbuild&logoColor=black)](https://esbuild.github.io/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge)](LICENSE)
 
@@ -148,7 +148,7 @@ npm install
 Configure your API credentials by setting up your local configuration keys:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 
 ```
 
