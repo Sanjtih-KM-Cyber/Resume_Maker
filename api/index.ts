@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { createServer as createViteServer } from "vite";
 import Groq from "groq-sdk";
 import * as dotenv from "dotenv";
 
@@ -9,8 +10,8 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-
-const app = express();
+async function startServer() {
+  const app = express();
   const PORT = 3000;
 
   app.use(express.json({ limit: '50mb' }));
@@ -118,8 +119,8 @@ Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) natur
 THE RESUME PAGE-BUDGET & CURATION RULES (Enforce these constraints on the density of your output):
 1. BRACKETS 0–4 YEARS: Layout must be highly dense and compressed. Optimize sentence lengths so it fits onto a single page canvas.
 2. BRACKETS 5–15 YEARS: Expect a solid 2 Pages. Do not compromise readability by crushing text. Write robust, detailed paragraphs.
-3. BRACKETS 15–30 YEARS: The 80/20 REAL ESTATE RULE (Chronological Curation). Allocate 80% of the text weight to the last 10-12 years. EARLY CAREER COMPRESSION: For any historical roles or employment nodes older than 15 years, compress them aggressively. Drop granular task descriptions entirely and output them as a dense "Early Professional History" block containing only the Company Name, Title, and Dates by passing an EMPTY ARRAY for their bullets block: "bullets": [].
-4. BRACKETS 30–50 YEARS: Focus heavily on high-altitude summaries of systemic corporate turnarounds, board seats, and lifetime industry contributions. Early career history must be deeply aggregated (empty bullet arrays) to prevent multi-page bloat.
+3. BRACKETS 15–30 YEARS: The 80/20 REAL ESTATE RULE (Chronological Curation). Allocate 80% of the text weight to the last 10-12 years, but DO NOT drop bullets completely. Condense older roles to 1-2 highly impactful bullets instead of dropping them.
+4. BRACKETS 30–50 YEARS: Focus heavily on high-altitude summaries of systemic corporate turnarounds, board seats, and lifetime industry contributions. Condense older history to 1 powerful bullet per role to prevent multi-page bloat without losing the data points.
 
 MULTI-PAGE & ANTI-TRUNCATION SAFEGUARD:
 While enforcing the curation rules above, you are strictly forbidden from randomly slicing or dropping entire historical company blocks from the state array. Maintain the layout budget by compressing the text weight of individual bullet points rather than omitting entire history records.
@@ -388,6 +389,19 @@ OBJECTIVE:
     }
   });
 
-
+  // Vite middleware for development
+  if (process.env.NODE_ENV !== "production") {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), "dist");
+    app.use(express.static(distPath));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
+    });
+  }
 
 export default app;
