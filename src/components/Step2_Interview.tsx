@@ -13,10 +13,11 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
   const [answersMap, setAnswersMap] = useState<Record<string, string[]>>({});
   const [currentCompanyAnswers, setCurrentCompanyAnswers] = useState<string[]>([]);
 
-  // Initialize the answers array when step changes, if not already set
+  // Initialize the answers array when step changes
   React.useEffect(() => {
     if (questions && questions.length > 0 && currentStep < questions.length) {
       const company = questions[currentStep].companyName;
+      // If we already have answers saved for this company, load them. Otherwise, initialize empty strings based on question count.
       setCurrentCompanyAnswers(answersMap[company] || Array(questions[currentStep].questions.length).fill(''));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,8 +32,8 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
   const handleNext = () => {
     if (!questions || questions.length === 0) return;
     
-    // Check if at least one question is answered in this step (or maybe all?)
-    if (currentCompanyAnswers.every(a => !a.trim())) return;
+    // Require all answers to be filled
+    if (currentCompanyAnswers.some(a => !a.trim())) return;
 
     const currentCompany = questions[currentStep].companyName;
     const updatedMap = {
@@ -43,6 +44,8 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
     setAnswersMap(updatedMap);
 
     if (currentStep < questions.length - 1) {
+      // Clear current answers so they don't leak into the next step
+      setCurrentCompanyAnswers([]);
       setCurrentStep(currentStep + 1);
     } else {
       // Completed all questions, compile string
@@ -135,7 +138,6 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
           
           <div className="pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
             <button
-               // Enable if valid, but also if there's no question array somehow
               disabled={!isValid && currentCompany.questions.length > 0}
               onClick={handleNext}
               className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
