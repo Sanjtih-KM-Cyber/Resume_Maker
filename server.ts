@@ -46,10 +46,37 @@ ${resumeText}`;
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
-      
+
       const text = response.choices[0]?.message?.content || "{}";
-      const parsed = JSON.parse(text);
-      res.json(parsed.results || []);
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch (e) {
+        // Fallback robust json extraction if Groq adds markdown formatting like ```json
+        const jsonMatch = text.match(/\{.*\}/s);
+        if (jsonMatch) {
+          try {
+             parsed = JSON.parse(jsonMatch[0]);
+          } catch(e2) {
+             parsed = { results: [] };
+          }
+        } else {
+          parsed = { results: [] };
+        }
+      }
+
+      // Some Groq models might return the array directly despite the prompt
+      let finalResults = [];
+      if (Array.isArray(parsed)) {
+        finalResults = parsed;
+      } else if (parsed && Array.isArray(parsed.results)) {
+        finalResults = parsed.results;
+      } else if (parsed && parsed.companyName) {
+        // If it accidentally returned a single object instead of array
+        finalResults = [parsed];
+      }
+
+      res.json(finalResults);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });
@@ -131,7 +158,18 @@ You MUST return a JSON object with the following structure:
       });
       
       const text = response.choices[0]?.message?.content || "{}";
-      res.json(JSON.parse(text));
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch (e) {
+        const jsonMatch = text.match(/\{.*\}/s);
+        if (jsonMatch) {
+          try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
+        } else {
+          parsed = {};
+        }
+      }
+      res.json(parsed);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });
@@ -169,7 +207,18 @@ Ensure you return a JSON object that matches the structure of the input JSON Res
       });
       
       const text = response.choices[0]?.message?.content || "{}";
-      res.json(JSON.parse(text));
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch (e) {
+        const jsonMatch = text.match(/\{.*\}/s);
+        if (jsonMatch) {
+          try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
+        } else {
+          parsed = {};
+        }
+      }
+      res.json(parsed);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });
