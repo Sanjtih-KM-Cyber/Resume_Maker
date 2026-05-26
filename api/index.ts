@@ -109,21 +109,29 @@ CRITICAL DATA CONSTRAINTS:
 1. "contactInfo.targetTitle" MUST exactly be "\${targetRole}".
 2. "contactInfo.location" MUST be in City, State format.
 3. "workExperience[].dates" MUST be in MM/YYYY format.
-4. "workExperience[].bullets" MUST perfectly align with the candidate's total years of experience. You must analyze the total timeline and apply the exact corresponding tone and scope:
-   - 0-2 Years (Entry-Level): Focus on flawless execution, technical skill application, rapid learning, and tactical contributions.
-   - 2-4 Years (Mid-Level): Focus on project ownership, process optimization, stakeholder collaboration, and measurable outcomes.
-   - 5-7 Years (Senior-Level): Focus on leading initiatives, cross-functional impact, mentoring junior staff, and driving departmental metrics.
-   - 8-10 Years (Manager/Director): Focus on strategic vision, team leadership, budget/P&L management, and scaling business operations.
-   - 10-15 Years (Executive/VP): Focus on enterprise-wide strategy, organizational transformation, and market expansion.
-   - 15-20 Years (Senior Executive/SVP): Focus on board-level reporting, global scaling, M&A integrations, and macro-financial steering.
-   - 20-30 Years (Industry Veteran/C-Suite): Focus on industry-wide paradigm shifts, multi-national legacy building, and eminent thought leadership.
-   - 30-50+ Years (Eminent Authority): Focus on lifetime industry impact, foundational architectural legacy, and macroeconomic steering.
-   Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into flowing, high-impact narratives appropriate for their tier. ELIMINATE REPETITIVE ACTION VERBS. Use a diverse, high-caliber vocabulary matrix.
+4. "workExperience[].bullets" MUST perfectly align with the candidate's total years of experience. You must analyze the total timeline and apply the exact corresponding tone, scope, and phrasing expectations:
+
+CAREER MATRIX DEFINITIONS:
+- 0–2 Years (Execution): Focus on high-quality tactical execution, core technical skill application, rapid learning agility, and error-free individual contributions under direct supervision.
+- 2–4 Years (Ownership): Focus on independent project ownership, process optimization, data-backed troubleshooting, and close cross-functional stakeholder collaboration.
+- 5–7 Years (Leadership): Focus on leading high-impact initiatives, formal mentoring of junior staff, expanding domain scope, and directly driving departmental metrics or business unit KPIs.
+- 8–10 Years (Strategy): Focus on strategic vision mapping, multi-team leadership, localized budget management, operational scaling, and aligning technical execution with long-term business goals.
+- 10–15 Years (Executive): Focus on entire business unit or departmental transformation, heavy P&L/budget ownership, portfolio diversification, organizational architecture, and setting multi-year operational roadmaps.
+- 15–20 Years (Enterprise Transformation): Focus on corporate governance, enterprise-wide change management, global strategy alignment, board-level reporting, and orchestrating massive cross-departmental capital allocation.
+- 20–30 Years (Industry Veteran / Board Level): Focus on macroeconomic navigation, market-defining mergers and acquisitions (M&A), regulatory or compliance steering, and advising public or private boards on long-term corporate viability.
+- 30–50 Years (Legacy / Eminent Industry Authority): Focus on lifetime industry impact, shaping global sector policy or foundational architectural standards, piloting organization-wide legacy preservation, and high-altitude economic steering.
+
+PHRASING & EXPECTATION RULES:
+- Brackets 0–7 Years: Heavy emphasis on hard skills, specific technical tool stacks, and clear, localized metrics. Use active, operational verbs like Engineered, Developed, Optimized, Streamlined, and Maintained.
+- Brackets 8–20 Years: You MUST completely drop task-level descriptions (no basic software tools or day-to-day administrative tasks). Highlight P&L scope, organizational scale, and cross-functional changes. Language shifts entirely to visionary, commanding verbs like Orchestrated, Spearheaded, Championed, Restructured, and Catalyzed.
+- Brackets 20–50 Years: High-level curation. At this stage, reserve 80% of space for board placements, massive turnarounds, joint ventures, or industry-wide contributions. Use high-altitude governance verbs like Steered, Advised, Structured, Formulated, and Governed.
+
+Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into these frameworks.
 5. "skills": Group into 3 distinct arrays: Core Expertise, Technical Tools, Methodologies.
-6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms (e.g. O2C not O2C) and act as a professional proofreader.
-7. PROMOTIONS: If an employment duration at a single company exceeds 4 years and involves title promotions, split them into separate chronological sub-headings as distinct items within workExperience, ordered from newest to oldest.
-8. TRUTH & INTEGRITY: STRICTLY FORBIDDEN FROM FABRICATING. You must NOT invent or hallucinate any facts, metrics, tools, dates, or responsibilities that were not explicitly present in the original resume or provided in the interview answers. If a metric is missing, do not invent one; frame the achievement truthfully based ONLY on the provided text.
-9. MULTI-PAGE & ANTI-TRUNCATION: Never optimize layout to fit a single page. Do not drop arrays, truncate lists, or shorten historical nodes. Output complete metrics for all companies.
+6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms.
+7. PROMOTIONS: If duration > 4 years with promotions, split into chronological sub-headings.
+8. TRUTH & INTEGRITY: STRICTLY FORBIDDEN FROM FABRICATING. Do not invent metrics, tools, or facts not present in inputs.
+9. MULTI-PAGE & ANTI-TRUNCATION: Output complete metrics for all companies.
 
 You MUST return a JSON object with the following structure:
 {
@@ -134,7 +142,7 @@ You MUST return a JSON object with the following structure:
     "location": "string",
     "targetTitle": "string"
   },
-  "professionalSummary": "string (MUST be a commanding 3-4 line summary highlighting overall scale and impact matched exactly to their experience tier. DO NOT INVENT METRICS.)",
+  "professionalSummary": "string (MUST be a commanding 3-4 line summary highlighting overall scale and impact matched exactly to their experience tier & vocabulary expectations. DO NOT INVENT METRICS.)",
   "skills": {
     "coreExpertise": ["string"],
     "technicalTools": ["string"],
@@ -146,7 +154,7 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (High-impact narrative matched to their tier. DO NOT INVENT METRICS.)"]
+      "bullets": ["string (High-impact narrative matched to their tier's phrasing rules. DO NOT INVENT METRICS.)"]
     }
   ],
   "education": [
