@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import Groq from "groq-sdk";
 import * as dotenv from "dotenv";
 
@@ -10,8 +9,8 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-async function startServer() {
-  const app = express();
+
+const app = express();
   const PORT = 3000;
 
   app.use(express.json({ limit: '50mb' }));
@@ -98,15 +97,38 @@ ${interviewAnswers || 'None'}
 
 Create an optimized resume JSON structure based on this information.
 CRITICAL DATA CONSTRAINTS:
-1. "contactInfo.targetTitle" MUST exactly be "${targetRole}".
-2. "contactInfo.location" MUST be in City, State format.
-3. "workExperience[].dates" MUST be in MM/YYYY format.
-4. "workExperience[].bullets" MUST strictly adhere to the Google X-Y-Z formula. However, ELIMINATE REPETITIVE ACTION VERB SYNTAX. You must NEVER start consecutive bullet points with the exact same verb. Enforce a diverse vocabulary matrix utilizing active, high-impact leadership verbs (e.g., "Spearheaded", "Engineered", "Optimized", "Architected", "Championed", "Catalyzed", "Orchestrated", "Secured", "Mitigated", "Formulated"). Maintain hard metrics but weave them into natural, elegant professional narratives.
+
+THE 0-50 YEAR CAREER MATRIX:
+You must determine the candidate's exact years of experience based on the earliest date in their work history and map their entire linguistic profile to one of the following brackets.
+- 0–3 Years (Entry/Junior): Focus on execution, specific tools, and granular metrics or outputs.
+- 3–8 Years (Mid-Level): Focus on project ownership, cross-functional collaboration, system optimization, and localized team leadership. Translate basic tasks into metrics or business unit KPIs.
+- 8–10 Years (Strategy): Focus on strategic vision mapping, multi-team leadership, localized budget management, operational scaling, and aligning technical execution with long-term business goals.
+- 10–15 Years (Executive): Focus on entire business unit or departmental transformation, heavy P&L/budget ownership, portfolio diversification, organizational architecture, and setting multi-year operational roadmaps.
+- 15–20 Years (Enterprise Transformation): Focus on corporate governance, enterprise-wide change management, global strategy alignment, board-level reporting, and orchestrating massive cross-departmental capital allocation.
+- 20–30 Years (Industry Veteran / Board Level): Focus on macroeconomic navigation, market-defining mergers and acquisitions (M&A), regulatory or compliance steering, and advising public or private boards on long-term corporate viability.
+- 30–50 Years (Legacy / Eminent Industry Authority): Focus on lifetime industry impact, shaping global sector policy or foundational architectural standards, piloting organization-wide legacy preservation, and high-altitude economic steering.
+
+PHRASING & EXPECTATION RULES:
+- Brackets 0–7 Years: Heavy emphasis on hard skills, specific technical tool stacks, and clear, localized metrics. Use active, operational verbs like Engineered, Developed, Optimized, Streamlined, and Maintained.
+- Brackets 8–20 Years: You MUST completely drop task-level descriptions (no basic software tools or day-to-day administrative tasks). Highlight P&L scope, organizational scale, and cross-functional changes. Language shifts entirely to visionary, commanding verbs like Orchestrated, Spearheaded, Championed, Restructured, and Catalyzed.
+- Brackets 20–50 Years: High-level curation. At this stage, reserve 80% of space for board placements, massive turnarounds, joint ventures, or industry-wide contributions. Use high-altitude governance verbs like Steered, Advised, Structured, Formulated, and Governed.
+
+Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into these frameworks.
+
+THE RESUME PAGE-BUDGET & CURATION RULES (Enforce these constraints on the density of your output):
+1. BRACKETS 0–4 YEARS: Layout must be highly dense and compressed. Optimize sentence lengths so it fits onto a single page canvas.
+2. BRACKETS 5–15 YEARS: Expect a solid 2 Pages. Do not compromise readability by crushing text. Write robust, detailed paragraphs.
+3. BRACKETS 15–30 YEARS: The 80/20 REAL ESTATE RULE (Chronological Curation). Allocate 80% of the text weight to the last 10-12 years. EARLY CAREER COMPRESSION: For any historical roles or employment nodes older than 15 years, compress them aggressively. Drop granular task descriptions entirely and output them as a dense "Early Professional History" block containing only the Company Name, Title, and Dates by passing an EMPTY ARRAY for their bullets block: "bullets": [].
+4. BRACKETS 30–50 YEARS: Focus heavily on high-altitude summaries of systemic corporate turnarounds, board seats, and lifetime industry contributions. Early career history must be deeply aggregated (empty bullet arrays) to prevent multi-page bloat.
+
+MULTI-PAGE & ANTI-TRUNCATION SAFEGUARD:
+While enforcing the curation rules above, you are strictly forbidden from randomly slicing or dropping entire historical company blocks from the state array. Maintain the layout budget by compressing the text weight of individual bullet points rather than omitting entire history records.
+
 5. "skills": Group into 3 distinct arrays based on the target role: Core Expertise, Technical Tools, Methodologies.
 6. TYPO CORRECTION: Actively sanitize text input. Standardize acronyms (e.g. O2C not 02C) and act as a professional proofreader.
 7. PROMOTIONS: If an employment duration at a single company exceeds 4 years and involves title promotions, split them into separate chronological sub-headings as distinct items within workExperience, ordered from newest to oldest.
-8. TRUTH & INTEGRITY: You are strictly forbidden from fabricating, inventing, or hallucinating any biographical, historical, or professional facts (e.g., fictional companies, fabricated metrics, random dates, tools, or degrees) that were not present in the original uploaded resume or explicitly typed by the user in the interview chat phase.
-9. MULTI-PAGE & ANTI-TRUNCATION: You are strictly forbidden from optimizing the text layout to fit on a single page. Do not drop arrays, truncate lists, omit historical nodes, or shorten bullet points for the sake of page real-estate. Assume the document has an infinite vertical scroll budget. If there are 4 companies, output all 4 companies with their complete metrics, and let the frontend canvas naturally render across subsequent pages.
+8. TRUTH & INTEGRITY: You are strictly forbidden from fabricating facts. HOWEVER, you MUST formulate professional achievements into the Google X-Y-Z format ("Accomplished [X], as measured by [Y], by doing [Z]"). If exact metrics aren't provided, use qualitative impact measures (e.g. "scaled system architecture to handle enterprise workloads", "reduced operational latency", "improved cross-functional alignment").
+9. ATS OPTIMIZATION (CRITICAL): Ensure impeccable spelling and grammar. Never use the exact same action verb (e.g., "Managed", "Developed") more than once per company. Diversify vocabulary (e.g., Orchestrated, Architected, Spearheaded, Championed, Formulated). Quantify impact wherever logically inferable without lying.
 
 You MUST return a JSON object with the following structure:
 {
@@ -366,19 +388,6 @@ OBJECTIVE:
     }
   });
 
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-  }
+
 
 export default app;
