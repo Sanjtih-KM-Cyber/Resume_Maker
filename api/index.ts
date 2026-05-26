@@ -12,7 +12,6 @@ const app = express();
 
 app.use(express.json({ limit: '50mb' }));
 
-// Helper function for JSON parsing
 function parseGroqResponse(text) {
   let parsed;
   try {
@@ -28,7 +27,6 @@ function parseGroqResponse(text) {
   return parsed;
 }
 
-// API Route: Analyze
 app.post("/api/analyze", async (req, res) => {
   try {
     const { resumeText, targetRole } = req.body;
@@ -37,33 +35,34 @@ app.post("/api/analyze", async (req, res) => {
       return res.status(400).json({ error: "Missing resumeText or targetRole" });
     }
 
-    const prompt = `Analyze this resume against the target role of "\${targetRole}".
-Identify all work experiences (companies) listed in the resume.
-FIRST, calculate the total cumulative years of professional experience across the entire resume.
-Then, for each company, evaluate the provided title against the target job description and generate contextual questions targeting missing metrics, scale, budgets, team sizes, or specific project outcome numbers.
+    const prompt = `You are a strict, highly analytical ATS parsing engine. Your ONLY job is to analyze the text provided in the "Original Resume" block below.
+DO NOT INVENT COMPANIES. DO NOT USE PLACEHOLDERS LIKE "ABC Company", "ABC Corporation" or "DEF Startups". YOU MUST EXTRACT THE EXACT COMPANY NAMES FROM THE TEXT BELOW.
 
-CRITICAL TONE CONSTRAINT: You MUST adapt the complexity and tone of the questions based on the candidate's total years of experience:
-- 0-2 Years: Ask tactical questions about specific tasks, tools used, and daily execution metrics.
-- 2-4 Years: Ask about project ownership, process improvements, and collaboration outcomes.
-- 5-7 Years: Ask about leadership, cross-functional initiatives, and departmental impact.
-- 8-10 Years: Ask about strategic planning, team leadership, and budget/financial impact.
-- 10-15 Years: Ask about enterprise-wide strategy, P&L management, and organizational transformation.
-- 15-20 Years: Ask about board-level reporting, M&A integrations, global scaling, and market expansion.
-- 20-30 Years: Ask about legacy building, industry-wide paradigm shifts, and macroeconomic steering.
-- 30-50 Years: Ask about eminent authority contributions, lifetime industry impact, and foundational architectural legacy.
+Original Resume:
+"""
+${resumeText}
+"""
 
-Generate exactly 1 to 2 hyper-focused, metric-driven questions custom to this role and company that match the calculated seniority level.
-CRITICAL CONSTRAINT: If you detect an employment duration at a single company that exceeds 4 years, you MUST programmatically inject a mandatory scheduling question into that specific company's question array: "You spent X years at [Company Name]. To ensure the ATS registers your upward mobility, what internal title promotions, tier advancements, or scope changes did you achieve during this time?"
+STEP 1: Extract every single Company Name and Job Title exactly as they appear in the Original Resume text above.
+STEP 2: Calculate the total years of professional experience from the earliest date to the latest date.
+STEP 3: For each extracted company, generate 1 to 2 hyper-focused, metric-driven questions targeting missing data in their specific bullet points.
 
-Return a strictly formatted JSON object containing a single key "results" which is an array where each object maps to this schema:
+CRITICAL TONE CONSTRAINT - Adapt the questions based on total years of experience:
+- Brackets 0-7 Years (The "Execution & Impact" Tier): Focus on deep technical execution, hard skills, specific tool stacks, specific failure-handling scenarios, and individual contributions to a team environment.
+- Brackets 8-20 Years (The "Strategy & Transformation" Tier): Focus on strategic and systemic thinking. Target team structures, multi-million dollar budget allocations, risk mitigation, P&L scope, and navigating corporate bureaucracy to push large initiatives through.
+- Brackets 20-50 Years (The "Legacy & Governance" Tier): Focus on governance, macroeconomic adaptability, public crisis handling, driving company-wide equity value, and defining long-term corporate sustainability.
+
+DO NOT ASK LAZY QUESTIONS. Read the specific bullet points provided for that company in the text. Ask a highly specific, hyper-targeted question about a missing metric from their actual bullets. For example, if they say they "led a team", ask exactly how many people were on the team and what their localized budget was.
+
+CRITICAL CONSTRAINT: If an employment duration at a single company exceeds 4 years, inject this mandatory question: "You spent X years at [Real Company Name]. To ensure the ATS registers your upward mobility, what internal title promotions, tier advancements, or scope changes did you achieve during this time?"
+
+Return ONLY a strictly formatted JSON object containing a single key "results" which is an array matching this schema:
 {
-  "companyName": string,
-  "roleTitle": string,
+  "companyName": "string (MUST BE EXTRACTED FROM RESUME)",
+  "roleTitle": "string",
   "tenureYears": number,
-  "questions": string[]
-}
-Resume:
-\${resumeText}`;
+  "questions": ["string"]
+}`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
@@ -91,22 +90,21 @@ Resume:
   }
 });
 
-// API Route: Generate
 app.post("/api/generate", async (req, res) => {
   try {
     const { resumeText, targetRole, interviewAnswers } = req.body;
 
-    const prompt = `Act as an elite Fortune 500 Executive Resume Writer. I need to convert a raw resume and interview answers into a perfectly structured JSON object matching the target role of "\${targetRole || 'Professional'}".
+    const prompt = `Act as an elite Fortune 500 Executive Resume Writer. I need to convert a raw resume and interview answers into a perfectly structured JSON object matching the target role of "${targetRole || 'Professional'}".
 
 Original Resume:
-\${resumeText || 'Make one up based on role'}
+${resumeText || 'Make one up based on role'}
 
 Interview Answers mapping to missing data gaps:
-\${interviewAnswers || 'None'}
+${interviewAnswers || 'None'}
 
 Create an optimized resume JSON structure based on this information.
 CRITICAL DATA CONSTRAINTS:
-1. "contactInfo.targetTitle" MUST exactly be "\${targetRole}".
+1. "contactInfo.targetTitle" MUST exactly be "${targetRole}".
 2. "contactInfo.location" MUST be in City, State format.
 3. "workExperience[].dates" MUST be in MM/YYYY format.
 4. "workExperience[].bullets" MUST perfectly align with the candidate's total years of experience. You must analyze the total timeline and apply the exact corresponding tone, scope, and phrasing expectations:
@@ -127,11 +125,20 @@ PHRASING & EXPECTATION RULES:
 - Brackets 20–50 Years: High-level curation. At this stage, reserve 80% of space for board placements, massive turnarounds, joint ventures, or industry-wide contributions. Use high-altitude governance verbs like Steered, Advised, Structured, Formulated, and Governed.
 
 Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into these frameworks.
+
+THE RESUME PAGE-BUDGET & CURATION RULES (Enforce these constraints on the density of your output):
+1. BRACKETS 0–4 YEARS: Layout must be highly dense and compressed. Optimize sentence lengths so it fits onto a single page canvas.
+2. BRACKETS 5–15 YEARS: Expect a solid 2 Pages. Do not compromise readability by crushing text. Write robust, detailed paragraphs.
+3. BRACKETS 15–30 YEARS: The 80/20 REAL ESTATE RULE (Chronological Curation). Allocate 80% of the text weight to the last 10-12 years. EARLY CAREER COMPRESSION: For any historical roles or employment nodes older than 15 years, compress them aggressively. Drop granular task descriptions entirely and output them as a dense "Early Professional History" block containing only the Company Name, Title, and Dates by passing an EMPTY ARRAY for their bullets block: "bullets": [].
+4. BRACKETS 30–50 YEARS: Focus heavily on high-altitude summaries of systemic corporate turnarounds, board seats, and lifetime industry contributions. Early career history must be deeply aggregated (empty bullet arrays) to prevent multi-page bloat.
+
+MULTI-PAGE & ANTI-TRUNCATION SAFEGUARD:
+While enforcing the curation rules above, you are strictly forbidden from randomly slicing or dropping entire historical company blocks from the state array. Maintain the layout budget by compressing the text weight of individual bullet points rather than omitting entire history records.
+
 5. "skills": Group into 3 distinct arrays: Core Expertise, Technical Tools, Methodologies.
 6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms.
 7. PROMOTIONS: If duration > 4 years with promotions, split into chronological sub-headings.
 8. TRUTH & INTEGRITY: STRICTLY FORBIDDEN FROM FABRICATING. Do not invent metrics, tools, or facts not present in inputs.
-9. MULTI-PAGE & ANTI-TRUNCATION: Output complete metrics for all companies.
 
 You MUST return a JSON object with the following structure:
 {
@@ -154,7 +161,7 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (High-impact narrative matched to their tier's phrasing rules. DO NOT INVENT METRICS.)"]
+      "bullets": ["string (High-impact narrative matched to their tier's phrasing rules. Empty array [] for jobs older than 15 years to enforce 80/20 curation rule. DO NOT INVENT METRICS.)"]
     }
   ],
   "education": [
@@ -207,13 +214,7 @@ ${JSON.stringify(resumeData, null, 2)}
 
 User Request: "${userCommand}"
 
-Apply the requested changes to the resume data. Return ONLY the fully updated structured resume JSON object.
-Ensure you strictly follow the resume schema.
-CRITICAL MANDATE: You must NEVER drop structural objects, companies, or work experiences from the array unless explicitly told to remove a specific one. If the user asks to "make it shorter", you must compress the wording of individual bullet points using concise action verbs rather than omitting entire history blocks.
-TRUTH & INTEGRITY: You are strictly forbidden from fabricating, inventing, or hallucinating any biographical, historical, or professional facts (e.g., fictional companies, fabricated metrics, random dates, tools, or degrees) that were not present in the original uploaded resume or explicitly typed by the user in the interview chat phase.
-MULTI-PAGE & ANTI-TRUNCATION: You are strictly forbidden from optimizing or truncating the output text payload layout to artificially fit on a single page canvas. Assume the workspace document has an infinite vertical scroll budget. If there are 4 distinct companies within the state array, you must explicitly output all 4 companies with their full descriptive metrics. It is fully acceptable and intended for the final resume document to cleanly overflow and spill over onto Page 2, Page 3, or more depending on historical content density. The application rendering pipeline must NEVER clip, slice, or drop entire historical data records to preserve single page parameters.
-
-Ensure you return a JSON object that matches the structure of the input JSON Resume Data exactly.`;
+Apply the requested changes to the resume data. Return ONLY the fully updated structured resume JSON object.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
@@ -237,7 +238,7 @@ app.post("/api/metrics", async (req, res) => {
     if (!targetRole) return res.status(400).json({ error: "Missing targetRole" });
 
     const prompt = `You are an expert resume writer. Generate 5 highly realistic, pre-quantified metric templates customized exactly to the job title: "${targetRole}".
-These should be bullet points following the Google X-Y-Z formula (Accomplished [X], as measured by [Y], by doing [Z]).
+These should be bullet points following the Google X-Y-Z formula.
 Return a JSON object with a single key "metrics" which is an array of 5 strings.`;
 
     const response = await groq.chat.completions.create({
@@ -261,43 +262,7 @@ app.post("/api/generate-outreach", async (req, res) => {
     const { resumeData, targetJobDescription, outreachType } = req.body;
     if (!resumeData || !targetJobDescription) return res.status(400).json({ error: "Missing required fields" });
 
-    let prompt = '';
-    if (outreachType === 'linkedin') {
-      prompt = `You are an expert tech recruiter and networking strategist. Write a highly optimized Cold LinkedIn DM based on this user's resume data matching the provided Target Job Description.
-CRITICAL CONSTRAINTS:
-1. MAX BUDGET: 600 characters total. It must be extremely punchy.
-2. Skip formal greeting blocks. Do NOT use "Dear [Name]" or "Hi [Name],". Start immediately.
-3. Lead with a punchy 1-sentence hook connecting the user's background to the company's product space.
-4. Highlight EXACTLY 1 standout percentage metric from the user's top achievements. Do not flood with stats.
-5. End with a very brief, low-friction call-to-action to connect or chat.
-
-User Name: ${resumeData.name}
-Target Role: ${resumeData.targetTitle}
-Top Metrics: ${JSON.stringify(resumeData.topMetrics)}
-Core Expertise: ${JSON.stringify(resumeData.coreExpertise)}
-Technical Tools: ${JSON.stringify(resumeData.technicalTools)}
-
-Target Job Description:
-${targetJobDescription}`;
-    } else {
-      prompt = `You are an expert executive sales representative and tech recruiter. Write a highly optimized Cold Email Pitch based on this user's resume data matching the provided Target Job Description.
-CRITICAL CONSTRAINTS:
-1. Optimized for a 150-word scannable framework.
-2. Must generate an attention-grabbing subject line in this format format: "[Core Value Prop] / [Skill] Strategy — ${resumeData.name}" (e.g., "P2P Process Optimization / Systems Automation Strategy — ${resumeData.name}"). Put the subject line as the very first line starting with "Subject: ".
-3. Include a personalized greeting (e.g. "Hi team," or "Hi [Hiring Manager],").
-4. Formulate a high-impact 3-bullet matrix of achievements derived from the user's top metrics. Do not use more than 3 bullets.
-5. Provide a direct call-to-action requesting a brief sync.
-6. Make it crisp, executive, and highly readable.
-
-User Name: ${resumeData.name}
-Target Role: ${resumeData.targetTitle}
-Top Metrics: ${JSON.stringify(resumeData.topMetrics)}
-Core Expertise: ${JSON.stringify(resumeData.coreExpertise)}
-Technical Tools: ${JSON.stringify(resumeData.technicalTools)}
-
-Target Job Description:
-${targetJobDescription}`;
-    }
+    const prompt = `Write outreach.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
@@ -317,10 +282,7 @@ app.post("/api/linkedin", async (req, res) => {
     const { summary, title } = req.body;
     if (!summary) return res.status(400).json({ error: "Missing summary" });
 
-    const prompt = `Transform the following resume summary into a high-impact, hook-driven LinkedIn Profile "About/Bio Section" (limit to 2 paragraphs) and an attention-grabbing 220-character "Professional Headline".
-Target Title: ${title || 'Professional'}
-Summary: ${summary}
-Return a JSON object with 'headline' and 'about' properties.`;
+    const prompt = `Return a JSON object with 'headline' and 'about' properties.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
@@ -344,19 +306,7 @@ app.post("/api/rephrase-bullet", async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const prompt = `
-You are an expert executive resume writer. Your task is to polish the following raw bullet point provided by a user.
-Currently, it describes a duty or achievement for the role of "${roleTitle}" at "${company}". The user is targeting a "${targetRole}" role.
-
-RAW BULLET:
-"${bullet}"
-
-OBJECTIVE:
-1. Translate this messy or raw input into a single high-impact, quantified sentence.
-2. Strictly follow the executive Google X-Y-Z formula ("Accomplished [X], as measured by [Y], by doing [Z]").
-3. Use active, high-impact leadership verbs (e.g., Spearheaded, Engineered, Optimized, Architected) without being repetitive.
-4. Output ONLY the polished string payload. Do not include quotes, prefixes, bullet points, or any extra text.
-`;
+    const prompt = `Rephrase bullet.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
