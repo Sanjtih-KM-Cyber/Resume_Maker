@@ -37,10 +37,22 @@ app.post("/api/analyze", async (req, res) => {
       return res.status(400).json({ error: "Missing resumeText or targetRole" });
     }
 
-    const prompt = `Analyze this resume against the target role of "${targetRole}".
+    const prompt = `Analyze this resume against the target role of "\${targetRole}".
 Identify all work experiences (companies) listed in the resume.
-For each company, evaluate the provided title against the target job description and generate contextual questions targeting missing metrics, scale, budgets, team sizes, or specific project outcome numbers.
-Generate exactly 1 to 2 hyper-focused, metric-driven questions custom to this role and company.
+FIRST, calculate the total cumulative years of professional experience across the entire resume.
+Then, for each company, evaluate the provided title against the target job description and generate contextual questions targeting missing metrics, scale, budgets, team sizes, or specific project outcome numbers.
+
+CRITICAL TONE CONSTRAINT: You MUST adapt the complexity and tone of the questions based on the candidate's total years of experience:
+- 0-2 Years: Ask tactical questions about specific tasks, tools used, and daily execution metrics.
+- 2-4 Years: Ask about project ownership, process improvements, and collaboration outcomes.
+- 5-7 Years: Ask about leadership, cross-functional initiatives, and departmental impact.
+- 8-10 Years: Ask about strategic planning, team leadership, and budget/financial impact.
+- 10-15 Years: Ask about enterprise-wide strategy, P&L management, and organizational transformation.
+- 15-20 Years: Ask about board-level reporting, M&A integrations, global scaling, and market expansion.
+- 20-30 Years: Ask about legacy building, industry-wide paradigm shifts, and macroeconomic steering.
+- 30-50 Years: Ask about eminent authority contributions, lifetime industry impact, and foundational architectural legacy.
+
+Generate exactly 1 to 2 hyper-focused, metric-driven questions custom to this role and company that match the calculated seniority level.
 CRITICAL CONSTRAINT: If you detect an employment duration at a single company that exceeds 4 years, you MUST programmatically inject a mandatory scheduling question into that specific company's question array: "You spent X years at [Company Name]. To ensure the ATS registers your upward mobility, what internal title promotions, tier advancements, or scope changes did you achieve during this time?"
 
 Return a strictly formatted JSON object containing a single key "results" which is an array where each object maps to this schema:
@@ -51,10 +63,11 @@ Return a strictly formatted JSON object containing a single key "results" which 
   "questions": string[]
 }
 Resume:
-${resumeText}`;
+\${resumeText}`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -83,25 +96,42 @@ app.post("/api/generate", async (req, res) => {
   try {
     const { resumeText, targetRole, interviewAnswers } = req.body;
 
-    const prompt = `Act as an expert ATS Resume Writer. I need to convert a messy resume and interview answers into a perfectly structured JSON object matching the target role of "${targetRole || 'Professional'}".
+    const prompt = `Act as an elite Fortune 500 Executive Resume Writer. I need to convert a raw resume and interview answers into a perfectly structured JSON object matching the target role of "\${targetRole || 'Professional'}".
 
 Original Resume:
-${resumeText || 'Make one up based on role'}
+\${resumeText || 'Make one up based on role'}
 
 Interview Answers mapping to missing data gaps:
-${interviewAnswers || 'None'}
+\${interviewAnswers || 'None'}
 
 Create an optimized resume JSON structure based on this information.
 CRITICAL DATA CONSTRAINTS:
-1. "contactInfo.targetTitle" MUST exactly be "${targetRole}".
+1. "contactInfo.targetTitle" MUST exactly be "\${targetRole}".
 2. "contactInfo.location" MUST be in City, State format.
 3. "workExperience[].dates" MUST be in MM/YYYY format.
-4. "workExperience[].bullets" MUST strictly adhere to the Google X-Y-Z formula. However, ELIMINATE REPETITIVE ACTION VERB SYNTAX. You must NEVER start consecutive bullet points with the exact same verb. Enforce a diverse vocabulary matrix utilizing active, high-impact leadership verbs (e.g., "Spearheaded", "Engineered", "Optimized", "Architected", "Championed", "Catalyzed", "Orchestrated", "Secured", "Mitigated", "Formulated"). Maintain hard metrics but weave them into natural, elegant professional narratives.
-5. "skills": Group into 3 distinct arrays based on the target role: Core Expertise, Technical Tools, Methodologies.
-6. TYPO CORRECTION: Actively sanitize text input. Standardize acronyms (e.g. O2C not 02C) and act as a professional proofreader.
-7. PROMOTIONS: If an employment duration at a single company exceeds 4 years and involves title promotions, split them into separate chronological sub-headings as distinct items within workExperience, ordered from newest to oldest.
-8. TRUTH & INTEGRITY: You are strictly forbidden from fabricating, inventing, or hallucinating any biographical, historical, or professional facts (e.g., fictional companies, fabricated metrics, random dates, tools, or degrees) that were not present in the original uploaded resume or explicitly typed by the user in the interview chat phase.
-9. MULTI-PAGE & ANTI-TRUNCATION: You are strictly forbidden from optimizing the text layout to fit on a single page. Do not drop arrays, truncate lists, omit historical nodes, or shorten bullet points for the sake of page real-estate. Assume the document has an infinite vertical scroll budget. If there are 4 companies, output all 4 companies with their complete metrics, and let the frontend canvas naturally render across subsequent pages.
+4. "workExperience[].bullets" MUST perfectly align with the candidate's total years of experience. You must analyze the total timeline and apply the exact corresponding tone, scope, and phrasing expectations:
+
+CAREER MATRIX DEFINITIONS:
+- 0–2 Years (Execution): Focus on high-quality tactical execution, core technical skill application, rapid learning agility, and error-free individual contributions under direct supervision.
+- 2–4 Years (Ownership): Focus on independent project ownership, process optimization, data-backed troubleshooting, and close cross-functional stakeholder collaboration.
+- 5–7 Years (Leadership): Focus on leading high-impact initiatives, formal mentoring of junior staff, expanding domain scope, and directly driving departmental metrics or business unit KPIs.
+- 8–10 Years (Strategy): Focus on strategic vision mapping, multi-team leadership, localized budget management, operational scaling, and aligning technical execution with long-term business goals.
+- 10–15 Years (Executive): Focus on entire business unit or departmental transformation, heavy P&L/budget ownership, portfolio diversification, organizational architecture, and setting multi-year operational roadmaps.
+- 15–20 Years (Enterprise Transformation): Focus on corporate governance, enterprise-wide change management, global strategy alignment, board-level reporting, and orchestrating massive cross-departmental capital allocation.
+- 20–30 Years (Industry Veteran / Board Level): Focus on macroeconomic navigation, market-defining mergers and acquisitions (M&A), regulatory or compliance steering, and advising public or private boards on long-term corporate viability.
+- 30–50 Years (Legacy / Eminent Industry Authority): Focus on lifetime industry impact, shaping global sector policy or foundational architectural standards, piloting organization-wide legacy preservation, and high-altitude economic steering.
+
+PHRASING & EXPECTATION RULES:
+- Brackets 0–7 Years: Heavy emphasis on hard skills, specific technical tool stacks, and clear, localized metrics. Use active, operational verbs like Engineered, Developed, Optimized, Streamlined, and Maintained.
+- Brackets 8–20 Years: You MUST completely drop task-level descriptions (no basic software tools or day-to-day administrative tasks). Highlight P&L scope, organizational scale, and cross-functional changes. Language shifts entirely to visionary, commanding verbs like Orchestrated, Spearheaded, Championed, Restructured, and Catalyzed.
+- Brackets 20–50 Years: High-level curation. At this stage, reserve 80% of space for board placements, massive turnarounds, joint ventures, or industry-wide contributions. Use high-altitude governance verbs like Steered, Advised, Structured, Formulated, and Governed.
+
+Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into these frameworks.
+5. "skills": Group into 3 distinct arrays: Core Expertise, Technical Tools, Methodologies.
+6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms.
+7. PROMOTIONS: If duration > 4 years with promotions, split into chronological sub-headings.
+8. TRUTH & INTEGRITY: STRICTLY FORBIDDEN FROM FABRICATING. Do not invent metrics, tools, or facts not present in inputs.
+9. MULTI-PAGE & ANTI-TRUNCATION: Output complete metrics for all companies.
 
 You MUST return a JSON object with the following structure:
 {
@@ -112,7 +142,7 @@ You MUST return a JSON object with the following structure:
     "location": "string",
     "targetTitle": "string"
   },
-  "professionalSummary": "string",
+  "professionalSummary": "string (MUST be a commanding 3-4 line summary highlighting overall scale and impact matched exactly to their experience tier & vocabulary expectations. DO NOT INVENT METRICS.)",
   "skills": {
     "coreExpertise": ["string"],
     "technicalTools": ["string"],
@@ -124,7 +154,7 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (Google X-Y-Z formula)"]
+      "bullets": ["string (High-impact narrative matched to their tier's phrasing rules. DO NOT INVENT METRICS.)"]
     }
   ],
   "education": [
@@ -148,6 +178,7 @@ You MUST return a JSON object with the following structure:
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -186,6 +217,7 @@ Ensure you return a JSON object that matches the structure of the input JSON Res
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -210,6 +242,7 @@ Return a JSON object with a single key "metrics" which is an array of 5 strings.
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -268,6 +301,7 @@ ${targetJobDescription}`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
     });
     res.json({ pitch: response.choices[0]?.message?.content || "" });
@@ -290,6 +324,7 @@ Return a JSON object with 'headline' and 'about' properties.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -325,6 +360,7 @@ OBJECTIVE:
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
     });
 
