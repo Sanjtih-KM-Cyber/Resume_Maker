@@ -10,15 +10,14 @@ interface Step2Props {
 
 export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [answersMap, setAnswersMap] = useState<Record<string, string[]>>({});
+  const [answersMap, setAnswersMap] = useState<Record<number, string[]>>({});
   const [currentCompanyAnswers, setCurrentCompanyAnswers] = useState<string[]>([]);
 
   // Initialize the answers array when step changes
   React.useEffect(() => {
     if (questions && questions.length > 0 && currentStep < questions.length) {
-      const company = questions[currentStep].companyName;
-      // If we already have answers saved for this company, load them. Otherwise, initialize empty strings based on question count.
-      setCurrentCompanyAnswers(answersMap[company] || Array(questions[currentStep].questions.length).fill(''));
+      // If we already have answers saved for this step, load them. Otherwise, initialize empty strings based on question count.
+      setCurrentCompanyAnswers(answersMap[currentStep] || Array(questions[currentStep].questions.length).fill(''));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, questions]);
@@ -35,10 +34,9 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
     // Require all answers to be filled
     if (currentCompanyAnswers.some(a => !a.trim())) return;
 
-    const currentCompany = questions[currentStep].companyName;
     const updatedMap = {
       ...answersMap,
-      [currentCompany]: currentCompanyAnswers
+      [currentStep]: currentCompanyAnswers
     };
     
     setAnswersMap(updatedMap);
@@ -50,8 +48,8 @@ export const Step2_Interview: React.FC<Step2Props> = ({ questions, onComplete })
     } else {
       // Completed all questions, compile string
       let compiledString = '';
-      questions.forEach(comp => {
-        const answers = updatedMap[comp.companyName] || [];
+      questions.forEach((comp, stepIdx) => {
+        const answers = updatedMap[stepIdx] || [];
         compiledString += `=== Company: ${comp.companyName} | Role: ${comp.roleTitle} ===\n`;
         comp.questions.forEach((q, idx) => {
           compiledString += `Q: ${q}\nA: ${answers[idx] || 'N/A'}\n\n`;

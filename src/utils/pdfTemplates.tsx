@@ -839,6 +839,46 @@ const ClassicBorderTemplate = ({ data }: { data: ResumeData }) => (
 );
 
 // 15. Neo Brutalism
+
+// ATS Max
+const AtsMaxTemplate = ({ data }: { data: ResumeData }) => (
+  <Page wrap={true} size="A4" style={{ ...styles.page, padding: 36, fontFamily: 'Helvetica' }}>
+    <View style={{ marginBottom: 15 }}>
+      <Text style={{ fontSize: 16, fontFamily: 'Helvetica-Bold' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 10 }}>{data.contactInfo.targetTitle}</Text>
+      <Text style={{ fontSize: 9, marginTop: 4 }}>{data.contactInfo.email} | {data.contactInfo.phone} | {data.contactInfo.location}</Text>
+    </View>
+
+    <View style={{ marginBottom: 15 }}>
+      <Text style={{ fontSize: 10, lineHeight: 1.4 }}>{data.professionalSummary}</Text>
+    </View>
+
+    <Text style={{ fontSize: 12, fontFamily: 'Helvetica-Bold', borderBottom: 1, paddingBottom: 2, marginBottom: 8 }} minPresenceAhead={100}>PROFESSIONAL EXPERIENCE</Text>
+    {(data.workExperience || []).map((w, i) => (
+      <View key={i} style={{ marginBottom: 12 }}>
+        <Text style={{ fontSize: 11, fontFamily: 'Helvetica-Bold' }}>{w.roleTitle}</Text>
+        <Text style={{ fontSize: 10 }}>{w.company} - {w.location} | {w.dates}</Text>
+        <View style={{ marginTop: 4 }}>
+          {(w.bullets || []).map((h, j) => (
+            <Text key={j} style={{ fontSize: 10, marginBottom: 3, lineHeight: 1.4 }}>• {h}</Text>
+          ))}
+        </View>
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 12, fontFamily: 'Helvetica-Bold', borderBottom: 1, paddingBottom: 2, marginBottom: 8 }} minPresenceAhead={100}>EDUCATION</Text>
+    {(data.education || []).map((e, i) => (
+      <View key={i} style={{ marginBottom: 6 }}>
+        <Text style={{ fontSize: 10, fontFamily: 'Helvetica-Bold' }}>{e.degree}</Text>
+        <Text style={{ fontSize: 10 }}>{e.institution} | {e.graduationYear}</Text>
+      </View>
+    ))}
+
+    <RenderSkills data={data} headerStyle={{ fontSize: 12, fontFamily: 'Helvetica-Bold', borderBottom: 1, paddingBottom: 2, marginBottom: 8, marginTop: 10 }} color="#000" />
+  </Page>
+);
+
+// 15. Neo Brutalism
 const NeoBrutalismTemplate = ({ data }: { data: ResumeData }) => (
   <Page wrap={true} size="A4" style={{ ...styles.page, padding: 30, backgroundColor: '#fdfbc8' }}>
     <View style={{ border: 3, borderColor: '#000', padding: 20, backgroundColor: '#fff', boxShadow: '5 5 0 #000', marginBottom: 20 }}>
@@ -908,27 +948,27 @@ export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templat
       {templateId === 'reverse-chronological' && <ModernTemplate data={data} />}
       {templateId === 'minimalist' && <MinimalistTemplate data={data} />}
       {templateId === 'executive' && <ExecutiveTemplate data={data} />}
-      {templateId === 'ats-max' && <TechTemplate data={data} />}
+      {templateId === 'ats-max' && <AtsMaxTemplate data={data} />}
       {templateId === 'one-page-condensed' && <CompactTemplate data={data} />}
       
-      {templateId === 'combination-hybrid' && <CleanGridTemplate data={data} />}
+      {templateId === 'combination-hybrid' && <NeoBrutalismTemplate data={data} />}
       {templateId === 'technical' && <TechTemplate data={data} />}
-      {templateId === 'project-focused' && <CleanGridTemplate data={data} />}
+      {templateId === 'project-focused' && <MinimalistTemplate data={data} />}
       {templateId === 'startup-minimal' && <StartupMinimalTemplate data={data} />}
       {templateId === 'targeted-precision' && <ClassicBorderTemplate data={data} />}
       
       {templateId === 'functional-skills' && <BoldTemplate data={data} />}
       {templateId === 'career-changer' && <ElegantTemplate data={data} />}
-      {templateId === 'entry-level' && <CompactTemplate data={data} />}
-      {templateId === 'internship-academic' && <AcademicCvTemplate data={data} />}
+      {templateId === 'entry-level' && <StartupMinimalTemplate data={data} />}
+      {templateId === 'internship-academic' && <ModernNavySidebar data={data} />}
       
-      {templateId === 'modern-two-column' && <BoldTemplate data={data} />}
+      {templateId === 'modern-two-column' && <EmeraldTechGrid data={data} />}
       {templateId === 'creative-pic' && <CreativePicTemplate data={data} />}
       {templateId === 'corporate-pic' && <CorporatePicTemplate data={data} />}
-      {templateId === 'hybrid-sidebar' && <ElegantTemplate data={data} />}
+      {templateId === 'hybrid-sidebar' && <ForestGreenStructure data={data} />}
       
       {templateId === 'academic-cv' && <AcademicCvTemplate data={data} />}
-      {templateId === 'portfolio-link-grid' && <CleanGridTemplate data={data} />}
+      {templateId === 'portfolio-link-grid' && <VibrantAzure data={data} />}
 
       {/* 12 New Modern Deck Themes */}
       {templateId === 'modern-navy-sidebar' && <ModernNavySidebar data={data} />}
