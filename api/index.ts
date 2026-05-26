@@ -97,9 +97,15 @@ CRITICAL DATA CONSTRAINTS:
 1. "contactInfo.targetTitle" MUST exactly be "\${targetRole}".
 2. "contactInfo.location" MUST be in City, State format.
 3. "workExperience[].dates" MUST be in MM/YYYY format.
-4. "workExperience[].bullets" MUST sound like a seasoned industry veteran. DO NOT sound like a junior employee. You must adapt the tone based on the candidate's total years of experience. If they have 10+ years, elevate the wording to reflect strategic vision, enterprise-wide impact, P&L management, and cross-functional leadership. Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into flowing, high-impact executive narratives. ELIMINATE REPETITIVE ACTION VERBS. Use a diverse, high-caliber vocabulary matrix (e.g., "Architected", "Orchestrated", "Catalyzed", "Spearheaded").
+4. "workExperience[].bullets" MUST perfectly align with the candidate's total years of experience. You must analyze the total timeline and apply the exact corresponding tone and scope:
+   - 0-2 Years (Entry-Level): Focus on flawless execution, technical skill application, rapid learning, and tactical contributions.
+   - 2-5 Years (Mid-Level): Focus on project ownership, process optimization, stakeholder collaboration, and measurable outcomes.
+   - 5-8 Years (Senior-Level): Focus on leading initiatives, cross-functional impact, mentoring junior staff, and driving departmental metrics.
+   - 8-12 Years (Manager/Director): Focus on strategic vision, team leadership, budget/P&L management, and scaling business operations.
+   - 12+ Years (Executive/VP): Focus on enterprise-wide transformation, board-level impact, global strategy, and executive leadership.
+   Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into flowing, high-impact narratives appropriate for their tier. ELIMINATE REPETITIVE ACTION VERBS. Use a diverse, high-caliber vocabulary matrix.
 5. "skills": Group into 3 distinct arrays: Core Expertise, Technical Tools, Methodologies.
-6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms (e.g. O2C not 02C) and act as a professional proofreader.
+6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms (e.g. O2C not O2C) and act as a professional proofreader.
 7. PROMOTIONS: If an employment duration at a single company exceeds 4 years and involves title promotions, split them into separate chronological sub-headings as distinct items within workExperience, ordered from newest to oldest.
 8. TRUTH & INTEGRITY: NEVER fabricate facts, metrics, tools, or dates not present in the original input or interview answers.
 9. MULTI-PAGE & ANTI-TRUNCATION: Never optimize layout to fit a single page. Do not drop arrays, truncate lists, or shorten historical nodes. Output complete metrics for all companies.
@@ -113,7 +119,7 @@ You MUST return a JSON object with the following structure:
     "location": "string",
     "targetTitle": "string"
   },
-  "professionalSummary": "string (MUST be a commanding 3-4 line executive summary highlighting overall scale and impact)",
+  "professionalSummary": "string (MUST be a commanding 3-4 line summary highlighting overall scale and impact matched exactly to their experience tier)",
   "skills": {
     "coreExpertise": ["string"],
     "technicalTools": ["string"],
@@ -125,7 +131,7 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (High-impact executive narrative)"]
+      "bullets": ["string (High-impact narrative matched to their tier)"]
     }
   ],
   "education": [
