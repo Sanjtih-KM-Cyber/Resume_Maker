@@ -55,6 +55,7 @@ ${resumeText}`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -83,25 +84,25 @@ app.post("/api/generate", async (req, res) => {
   try {
     const { resumeText, targetRole, interviewAnswers } = req.body;
 
-    const prompt = `Act as an expert ATS Resume Writer. I need to convert a messy resume and interview answers into a perfectly structured JSON object matching the target role of "${targetRole || 'Professional'}".
+    const prompt = `Act as an elite Fortune 500 Executive Resume Writer. I need to convert a raw resume and interview answers into a perfectly structured JSON object matching the target role of "\${targetRole || 'Professional'}".
 
 Original Resume:
-${resumeText || 'Make one up based on role'}
+\${resumeText || 'Make one up based on role'}
 
 Interview Answers mapping to missing data gaps:
-${interviewAnswers || 'None'}
+\${interviewAnswers || 'None'}
 
 Create an optimized resume JSON structure based on this information.
 CRITICAL DATA CONSTRAINTS:
-1. "contactInfo.targetTitle" MUST exactly be "${targetRole}".
+1. "contactInfo.targetTitle" MUST exactly be "\${targetRole}".
 2. "contactInfo.location" MUST be in City, State format.
 3. "workExperience[].dates" MUST be in MM/YYYY format.
-4. "workExperience[].bullets" MUST strictly adhere to the Google X-Y-Z formula. However, ELIMINATE REPETITIVE ACTION VERB SYNTAX. You must NEVER start consecutive bullet points with the exact same verb. Enforce a diverse vocabulary matrix utilizing active, high-impact leadership verbs (e.g., "Spearheaded", "Engineered", "Optimized", "Architected", "Championed", "Catalyzed", "Orchestrated", "Secured", "Mitigated", "Formulated"). Maintain hard metrics but weave them into natural, elegant professional narratives.
-5. "skills": Group into 3 distinct arrays based on the target role: Core Expertise, Technical Tools, Methodologies.
-6. TYPO CORRECTION: Actively sanitize text input. Standardize acronyms (e.g. O2C not 02C) and act as a professional proofreader.
+4. "workExperience[].bullets" MUST sound like a seasoned industry veteran. DO NOT sound like a junior employee. You must adapt the tone based on the candidate's total years of experience. If they have 10+ years, elevate the wording to reflect strategic vision, enterprise-wide impact, P&L management, and cross-functional leadership. Weave the Google X-Y-Z formula (Accomplished X, measured by Y, by doing Z) naturally into flowing, high-impact executive narratives. ELIMINATE REPETITIVE ACTION VERBS. Use a diverse, high-caliber vocabulary matrix (e.g., "Architected", "Orchestrated", "Catalyzed", "Spearheaded").
+5. "skills": Group into 3 distinct arrays: Core Expertise, Technical Tools, Methodologies.
+6. TYPO CORRECTION: Actively sanitize text. Standardize acronyms (e.g. O2C not 02C) and act as a professional proofreader.
 7. PROMOTIONS: If an employment duration at a single company exceeds 4 years and involves title promotions, split them into separate chronological sub-headings as distinct items within workExperience, ordered from newest to oldest.
-8. TRUTH & INTEGRITY: You are strictly forbidden from fabricating, inventing, or hallucinating any biographical, historical, or professional facts (e.g., fictional companies, fabricated metrics, random dates, tools, or degrees) that were not present in the original uploaded resume or explicitly typed by the user in the interview chat phase.
-9. MULTI-PAGE & ANTI-TRUNCATION: You are strictly forbidden from optimizing the text layout to fit on a single page. Do not drop arrays, truncate lists, omit historical nodes, or shorten bullet points for the sake of page real-estate. Assume the document has an infinite vertical scroll budget. If there are 4 companies, output all 4 companies with their complete metrics, and let the frontend canvas naturally render across subsequent pages.
+8. TRUTH & INTEGRITY: NEVER fabricate facts, metrics, tools, or dates not present in the original input or interview answers.
+9. MULTI-PAGE & ANTI-TRUNCATION: Never optimize layout to fit a single page. Do not drop arrays, truncate lists, or shorten historical nodes. Output complete metrics for all companies.
 
 You MUST return a JSON object with the following structure:
 {
@@ -112,7 +113,7 @@ You MUST return a JSON object with the following structure:
     "location": "string",
     "targetTitle": "string"
   },
-  "professionalSummary": "string",
+  "professionalSummary": "string (MUST be a commanding 3-4 line executive summary highlighting overall scale and impact)",
   "skills": {
     "coreExpertise": ["string"],
     "technicalTools": ["string"],
@@ -124,7 +125,7 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (Google X-Y-Z formula)"]
+      "bullets": ["string (High-impact executive narrative)"]
     }
   ],
   "education": [
@@ -148,6 +149,7 @@ You MUST return a JSON object with the following structure:
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -186,6 +188,7 @@ Ensure you return a JSON object that matches the structure of the input JSON Res
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -210,6 +213,7 @@ Return a JSON object with a single key "metrics" which is an array of 5 strings.
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -268,6 +272,7 @@ ${targetJobDescription}`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
     });
     res.json({ pitch: response.choices[0]?.message?.content || "" });
@@ -290,6 +295,7 @@ Return a JSON object with 'headline' and 'about' properties.`;
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
     });
@@ -325,6 +331,7 @@ OBJECTIVE:
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.2,
       messages: [{ role: "user", content: prompt }],
     });
 
