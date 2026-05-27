@@ -708,12 +708,21 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
 
               <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
                 <form onSubmit={handleCopilotSubmit} className="relative">
-                  <input
-                    type="text"
+                  <textarea
                     value={copilotInput}
                     onChange={(e) => setCopilotInput(e.target.value)}
-                    placeholder="Ask Copilot..."
-                    className="w-full bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-indigo-300 dark:focus:border-indigo-700 focus:bg-white dark:focus:bg-slate-900 rounded-full pl-4 pr-12 py-3 text-sm outline-none transition-all dark:text-white"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (copilotInput.trim() && !isCopilotLoading) {
+                          handleCopilotSubmit(e as any);
+                        }
+                      }
+                    }}
+                    placeholder="Ask Copilot (Shift+Enter for new line)..."
+                    rows={1}
+                    className="w-full bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-indigo-300 dark:focus:border-indigo-700 focus:bg-white dark:focus:bg-slate-900 rounded-2xl pl-4 pr-12 py-3 text-sm outline-none transition-all dark:text-white resize-none scrollbar-hide"
+                    style={{ minHeight: '44px', maxHeight: '150px' }}
                     disabled={isCopilotLoading}
                   />
                   <button
