@@ -157,7 +157,8 @@ You MUST return a JSON object with the following structure:
       "roleTitle": "string",
       "dates": "string (MM/YYYY)",
       "location": "string",
-      "bullets": ["string (Google X-Y-Z formula)"]
+      "bullets": ["string (Google X-Y-Z formula)"],
+      "pageBreakBefore": "boolean (optional, set to true if user explicitly requests to move this job to the next page)"
     }
   ],
   "education": [
@@ -224,6 +225,7 @@ Apply the requested changes to the resume data. Return ONLY the fully updated st
 Ensure you strictly follow the resume schema.
 CRITICAL MANDATE: You must NEVER drop structural objects, companies, or work experiences from the array unless explicitly told to remove a specific one. If the user asks to "make it shorter", you must compress the wording of individual bullet points using concise action verbs rather than omitting entire history blocks.
 IF THE USER PROVIDES NEW JOB EXPERIENCES OR ROLES, YOU MUST APPEND THEM TO THE EXISTING workExperience ARRAY. DO NOT REPLACE, OVERWRITE, OR DELETE ANY EXISTING ENTRIES. You are generating the structural data state. The UI rendering pipeline will naturally flow to Page 2 or 3. DO NOT artificially restrict the length of the JSON array.
+PAGE BREAK COMMANDS: If the user explicitly asks to "move this job to the next page" or "start this on a new page", you must find the target company in the workExperience array and set its pageBreakBefore property to true. Do not alter any other fields.
 TRUTH & INTEGRITY: You are strictly forbidden from fabricating, inventing, or hallucinating any biographical, historical, or professional facts (e.g., fictional companies, fabricated metrics, random dates, tools, or degrees) that were not present in the original uploaded resume or explicitly typed by the user in the interview chat phase.
 MULTI-PAGE & ANTI-TRUNCATION: You are strictly forbidden from optimizing or truncating the output text payload layout to artificially fit on a single page canvas. Assume the workspace document has an infinite vertical scroll budget. If there are 4 distinct companies within the state array, you must explicitly output all 4 companies with their full descriptive metrics. It is fully acceptable and intended for the final resume document to cleanly overflow and spill over onto Page 2, Page 3, or more depending on historical content density. The application rendering pipeline must NEVER clip, slice, or drop entire historical data records to preserve single page parameters.
 

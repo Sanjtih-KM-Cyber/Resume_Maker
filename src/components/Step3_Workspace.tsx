@@ -541,6 +541,17 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
                 <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2 mb-4"><h3 className="text-lg font-bold text-slate-800 dark:text-white">Work Experience (X-Y-Z Format)</h3><button onClick={() => addCompany()} className="text-xs bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 font-semibold px-3 py-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-indigo-900 transition-colors">+ Add Company</button></div>
                 {(data.workExperience || []).map((wk, i) => (
                   <div key={i} className="mb-6 pb-6 border-b border-slate-100 dark:border-slate-800 last:border-0 last:mb-0 last:pb-0 relative"><button onClick={() => removeCompany(i)} className="absolute -top-3 -right-3 text-red-500 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 p-1.5 rounded-full z-10 transition-colors tooltip" aria-label="Delete Company"><Trash2 className="w-4 h-4" /></button>
+                    <div className="flex items-center justify-end mb-2">
+                      <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={wk.pageBreakBefore || false}
+                          onChange={(e) => updateWork(i, 'pageBreakBefore', e.target.checked)}
+                          className="w-3.5 h-3.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
+                        />
+                        Force Page Break Before This Job
+                      </label>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
                       <div>
                         <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">Company</label>
