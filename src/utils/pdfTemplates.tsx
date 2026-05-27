@@ -942,6 +942,1386 @@ import {
   ForestGreenStructure 
 } from './TemplateModernDeck';
 
+
+// --- NEW TEMPLATE: VibrantCreative ---
+const VibrantCreative = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#EA580C', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#EA580C' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#EA580C', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#EA580C' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#EA580C' }}>✦</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#EA580C', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#EA580C', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: EditorialModern ---
+const EditorialModern = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#E11D48', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#E11D48', borderBottomWidth: 1, borderBottomColor: '#E11D48', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#E11D48', borderBottomWidth: 1, borderBottomColor: '#E11D48', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#E11D48', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#E11D48', borderBottomWidth: 1, borderBottomColor: '#E11D48', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: StartupBold ---
+const StartupBold = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#0D9488', paddingBottom: 15, marginBottom: 15, textAlign: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0D9488' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0D9488', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#0D9488' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#0D9488' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0D9488', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0D9488', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: MinimalPop ---
+const MinimalPop = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#D97706', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#D97706', borderBottomWidth: 1, borderBottomColor: '#D97706', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#D97706', borderBottomWidth: 1, borderBottomColor: '#D97706', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#D97706', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#D97706', borderBottomWidth: 1, borderBottomColor: '#D97706', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: CompactHybrid ---
+const CompactHybrid = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#C026D3', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#C026D3' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C026D3', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#C026D3' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#C026D3' }}>▸</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C026D3', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C026D3', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: FreshCanvas ---
+const FreshCanvas = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#059669', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#059669', borderBottomWidth: 1, borderBottomColor: '#059669', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#059669', borderBottomWidth: 1, borderBottomColor: '#059669', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#059669', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#059669', borderBottomWidth: 1, borderBottomColor: '#059669', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: BoardroomElite ---
+const BoardroomElite = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Times-Roman' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#1E293B', paddingBottom: 15, marginBottom: 15, textAlign: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1E293B' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E293B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#1E293B' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#1E293B' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E293B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E293B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: GlobalEnterprise ---
+const GlobalEnterprise = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Times-Roman' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#1E1B4B', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1E1B4B' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E1B4B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#1E1B4B' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#1E1B4B' }}>—</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E1B4B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E1B4B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: MergersAcquisitions ---
+const MergersAcquisitions = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Times-Roman' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#064E3B', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#064E3B', borderBottomWidth: 1, borderBottomColor: '#064E3B', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#064E3B', borderBottomWidth: 1, borderBottomColor: '#064E3B', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#064E3B', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#064E3B', borderBottomWidth: 1, borderBottomColor: '#064E3B', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: SovereignGovernance ---
+const SovereignGovernance = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Times-Roman' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#374151', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#374151' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#374151', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#374151' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#374151' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#374151', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#374151', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: EminentAuthority ---
+const EminentAuthority = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Times-Roman' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#3F3F46', paddingBottom: 15, marginBottom: 15, textAlign: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#3F3F46' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#3F3F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#3F3F46' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#3F3F46' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#3F3F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#3F3F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: StrategicScale ---
+const StrategicScale = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#334155', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#334155' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#334155', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#334155' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#334155' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#334155', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#334155', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: OperationalExcellence ---
+const OperationalExcellence = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#1E3A8A', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1E3A8A' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#1E3A8A' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#1E3A8A' }}>■</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: CrossFunctional ---
+const CrossFunctional = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#312E81', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#312E81', borderBottomWidth: 1, borderBottomColor: '#312E81', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#312E81', borderBottomWidth: 1, borderBottomColor: '#312E81', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#312E81', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#312E81', borderBottomWidth: 1, borderBottomColor: '#312E81', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: PLChampion ---
+const PLChampion = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#065F46', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#065F46' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#065F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#065F46' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#065F46' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#065F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#065F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: AgileTransformation ---
+const AgileTransformation = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#4B5563', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#4B5563' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#4B5563', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#4B5563' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#4B5563' }}>➤</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#4B5563', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#4B5563', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: FaangOptimized ---
+const FaangOptimized = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#0F172A', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0F172A' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0F172A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 10 }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#0F172A' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#0F172A' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0F172A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0F172A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: MatrixFunctional ---
+const MatrixFunctional = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#164E63', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#164E63', borderBottomWidth: 1, borderBottomColor: '#164E63', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#164E63', borderBottomWidth: 1, borderBottomColor: '#164E63', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#164E63', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#164E63', borderBottomWidth: 1, borderBottomColor: '#164E63', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: SystemsArchitect ---
+const SystemsArchitect = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#075985', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#075985' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#075985', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#075985' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#075985' }}>▹</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#075985', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#075985', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: AlgorithmicClean ---
+const AlgorithmicClean = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 30, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', fontFamily: 'Helvetica' }}>
+
+    {/* Single Column */}
+    <View style={{ borderBottomWidth: 2, borderBottomColor: '#1E3A8A', paddingBottom: 15, marginBottom: 15,  }}>
+      <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1E3A8A' }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, color: '#555555', marginTop: 3 }}>{data.contactInfo.targetTitle}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>•</Text>
+        <Text style={{ fontSize: 10, color: '#666666' }}>{data.contactInfo.location}</Text>
+      </View>
+    </View>
+
+    <Text style={{ fontSize: 12, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
+    {data.workExperience.map((job, idx) => (
+      <View key={idx} style={{ marginBottom: 15,  }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
+          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#1E3A8A' }}>{job.company}</Text>
+          <Text style={{ fontSize: 10, color: '#666666' }}>{job.location}</Text>
+        </View>
+        {job.bullets.map((b, i) => (
+          <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 4, paddingLeft: 8 }}>
+             <Text style={{ fontSize: 10, marginRight: 6, color: '#1E3A8A' }}>•</Text>
+             <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+          </View>
+        ))}
+      </View>
+    ))}
+
+    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, marginTop: 5, textTransform: 'uppercase' }}>Technical Skills & Expertise</Text>
+    <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginBottom: 15 }}>
+      {data.skills.coreExpertise.concat(data.skills.technicalTools).map((skill, idx) => (
+        <View key={idx} style={{ backgroundColor: '#F5F5F5', padding: '4 8', borderRadius: 4 }}>
+          <Text style={{ fontSize: 9 }}>{skill}</Text>
+        </View>
+      ))}
+    </View>
+
+    {data.education.length > 0 && (
+      <>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Education</Text>
+        {data.education.map((edu, idx) => (
+          <View key={idx} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+            <View>
+              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+              <Text style={{ fontSize: 10, color: '#555555' }}>{edu.institution}</Text>
+            </View>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+          </View>
+        ))}
+      </>
+    )}
+
+  </Page>
+);
+
+// --- NEW TEMPLATE: DevopsScale ---
+const DevopsScale = ({ data }: { data: ResumeData }) => (
+  <Page size="A4" style={{ padding: 0, backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'row', fontFamily: 'Helvetica' }}>
+
+    {/* Left Column */}
+    <View style={{ width: '35%', backgroundColor: '#27272A', padding: 25, color: '#FFFFFF' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 5 }}>{data.contactInfo.fullName}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 20 }}>{data.contactInfo.targetTitle}</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.email}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.phone}</Text>
+        <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.contactInfo.location}</Text>
+        {data.linkedinUrl && <Text style={{ fontSize: 10, marginBottom: 5 }}>{data.linkedinUrl}</Text>}
+      </View>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#FFFFFF', paddingBottom: 5 }}>SKILLS</Text>
+      <View style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {data.skills.coreExpertise.concat(data.skills.technicalTools).slice(0, 15).map((skill, i) => (
+          <Text key={i} style={{ fontSize: 10 }}>• {skill}</Text>
+        ))}
+      </View>
+    </View>
+
+    {/* Right Column */}
+    <View style={{ width: '65%', padding: 25 }}>
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#27272A', borderBottomWidth: 1, borderBottomColor: '#27272A', paddingBottom: 5, marginBottom: 10 }}>SUMMARY</Text>
+      <Text style={{ fontSize: 10, lineHeight: 1.5, marginBottom: 15 }}>{data.professionalSummary}</Text>
+
+      <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#27272A', borderBottomWidth: 1, borderBottomColor: '#27272A', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
+      {data.workExperience.map((job, idx) => (
+        <View key={idx} style={{ marginBottom: 15 }}>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
+            <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
+          </View>
+          <Text style={{ fontSize: 11, fontStyle: 'italic', color: '#27272A', marginBottom: 5 }}>{job.company} | {job.location}</Text>
+          {job.bullets.map((b, i) => (
+             <View key={i} style={{ display: 'flex', flexDirection: 'row', marginBottom: 3 }}>
+               <Text style={{ fontSize: 10, marginRight: 5 }}>•</Text>
+               <Text style={{ fontSize: 10, flex: 1, lineHeight: 1.4 }}>{b}</Text>
+             </View>
+          ))}
+        </View>
+      ))}
+
+      {data.education.length > 0 && (
+        <>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#27272A', borderBottomWidth: 1, borderBottomColor: '#27272A', paddingBottom: 5, marginBottom: 10, marginTop: 10 }}>EDUCATION</Text>
+          {data.education.map((edu, idx) => (
+            <View key={idx} style={{ marginBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{edu.degree}</Text>
+                <Text style={{ fontSize: 10, color: '#666666' }}>{edu.graduationYear}</Text>
+              </View>
+              <Text style={{ fontSize: 10 }}>{edu.institution}</Text>
+            </View>
+          ))}
+        </>
+      )}
+    </View>
+
+  </Page>
+);
+
 export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templateId: TemplateId }) => {
   return (
     <Document>
@@ -983,6 +2363,29 @@ export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templat
       {templateId === 'coral-accent' && <CoralAccent data={data} />}
       {templateId === 'monochrome-minimal' && <MonochromeMinimal data={data} />}
       {templateId === 'forest-green-structure' && <ForestGreenStructure data={data} />}
+
+      {templateId === 'vibrant_creative' && <VibrantCreative data={data} />}
+      {templateId === 'editorial_modern' && <EditorialModern data={data} />}
+      {templateId === 'startup_bold' && <StartupBold data={data} />}
+      {templateId === 'minimal_pop' && <MinimalPop data={data} />}
+      {templateId === 'compact_hybrid' && <CompactHybrid data={data} />}
+      {templateId === 'fresh_canvas' && <FreshCanvas data={data} />}
+      {templateId === 'boardroom_elite' && <BoardroomElite data={data} />}
+      {templateId === 'global_enterprise' && <GlobalEnterprise data={data} />}
+      {templateId === 'mergers_acquisitions' && <MergersAcquisitions data={data} />}
+      {templateId === 'sovereign_governance' && <SovereignGovernance data={data} />}
+      {templateId === 'eminent_authority' && <EminentAuthority data={data} />}
+      {templateId === 'strategic_scale' && <StrategicScale data={data} />}
+      {templateId === 'operational_excellence' && <OperationalExcellence data={data} />}
+      {templateId === 'cross_functional' && <CrossFunctional data={data} />}
+      {templateId === 'p_l_champion' && <PLChampion data={data} />}
+      {templateId === 'agile_transformation' && <AgileTransformation data={data} />}
+      {templateId === 'faang_optimized' && <FaangOptimized data={data} />}
+      {templateId === 'matrix_functional' && <MatrixFunctional data={data} />}
+      {templateId === 'systems_architect' && <SystemsArchitect data={data} />}
+      {templateId === 'algorithmic_clean' && <AlgorithmicClean data={data} />}
+      {templateId === 'devops_scale' && <DevopsScale data={data} />}
+
     </Document>
   );
 };

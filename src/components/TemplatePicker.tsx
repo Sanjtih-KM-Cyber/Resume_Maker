@@ -70,6 +70,55 @@ const folders: TemplateFolder[] = [
       { id: 'academic-cv', name: 'Academic CV', description: 'Multi-page for publications and grants.', color: 'bg-purple-50 dark:bg-purple-900/30' },
       { id: 'portfolio-link-grid', name: 'Portfolio Link Grid', description: 'Features clickable GitHub strings & URLs.', color: 'bg-blue-100 dark:bg-blue-900/40' },
     ]
+  },
+  {
+    id: 'folder-new-1',
+    name: 'MODERN, CREATIVE & CHEERY',
+    icon: <LayoutTemplate className="w-5 h-5 text-orange-500 dark:text-orange-400" />,
+    templates: [
+      { id: 'vibrant_creative', name: 'Vibrant Creative', description: 'High-energy, warm palettes for startups.', color: 'bg-orange-100 dark:bg-orange-900/30' },
+      { id: 'editorial_modern', name: 'Editorial Modern', description: 'Clean asymmetric magazine layout.', color: 'bg-rose-100 dark:bg-rose-900/30' },
+      { id: 'startup_bold', name: 'Startup Bold', description: 'Playful geometric accents.', color: 'bg-teal-100 dark:bg-teal-900/30' },
+      { id: 'minimal_pop', name: 'Minimal Pop', description: 'Clean base with pastel color bursts.', color: 'bg-amber-100 dark:bg-amber-900/30' },
+      { id: 'compact_hybrid', name: 'Compact Hybrid', description: 'Dense but highly stylized.', color: 'bg-fuchsia-100 dark:bg-fuchsia-900/30' },
+      { id: 'fresh_canvas', name: 'Fresh Canvas', description: 'Bright mint and coral fresh aesthetics.', color: 'bg-emerald-100 dark:bg-emerald-900/30' },
+    ]
+  },
+  {
+    id: 'folder-new-2',
+    name: 'EXECUTIVE & GOVERNANCE',
+    icon: <Briefcase className="w-5 h-5 text-emerald-800 dark:text-emerald-300" />,
+    templates: [
+      { id: 'boardroom_elite', name: 'Boardroom Elite', description: 'High-altitude classic serif layout.', color: 'bg-slate-200 dark:bg-slate-800' },
+      { id: 'global_enterprise', name: 'Global Enterprise', description: 'Deep navy accents for enterprise scale.', color: 'bg-indigo-100 dark:bg-indigo-900/50' },
+      { id: 'mergers_acquisitions', name: 'Mergers & Acquisitions', description: 'Heavy focus on major outcomes.', color: 'bg-emerald-50 dark:bg-emerald-900/20' },
+      { id: 'sovereign_governance', name: 'Sovereign Governance', description: 'Generous margins for senior leadership.', color: 'bg-gray-100 dark:bg-gray-800' },
+      { id: 'eminent_authority', name: 'Eminent Authority', description: 'Prestigious classic aesthetics.', color: 'bg-zinc-200 dark:bg-zinc-700' },
+    ]
+  },
+  {
+    id: 'folder-new-3',
+    name: 'STRATEGY & OPERATIONS',
+    icon: <Briefcase className="w-5 h-5 text-indigo-700 dark:text-indigo-300" />,
+    templates: [
+      { id: 'strategic_scale', name: 'Strategic Scale', description: 'Highlights organizational outcomes.', color: 'bg-slate-100 dark:bg-slate-800' },
+      { id: 'operational_excellence', name: 'Operational Excellence', description: 'Clear horizontal rules and metrics blocks.', color: 'bg-blue-50 dark:bg-blue-900/30' },
+      { id: 'cross_functional', name: 'Cross Functional', description: 'Structured slate and deep indigo headings.', color: 'bg-indigo-50 dark:bg-indigo-900/40' },
+      { id: 'p_l_champion', name: 'P&L Champion', description: 'Emphasizes budget and scale ownership.', color: 'bg-emerald-50 dark:bg-emerald-900/30' },
+      { id: 'agile_transformation', name: 'Agile Transformation', description: 'Structured charcoal matrices.', color: 'bg-gray-100 dark:bg-gray-800' },
+    ]
+  },
+  {
+    id: 'folder-new-4',
+    name: 'TECHNICAL & INFRASTRUCTURE',
+    icon: <Cpu className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
+    templates: [
+      { id: 'faang_optimized', name: 'FAANG Optimized', description: 'Ultra-dense, highly parsable technical format.', color: 'bg-slate-100 dark:bg-slate-800' },
+      { id: 'matrix_functional', name: 'Matrix Functional', description: 'Split-panes for dense tool stacks.', color: 'bg-cyan-50 dark:bg-cyan-900/30' },
+      { id: 'systems_architect', name: 'Systems Architect', description: 'Functional multi-column grid layouts.', color: 'bg-sky-50 dark:bg-sky-900/30' },
+      { id: 'algorithmic_clean', name: 'Algorithmic Clean', description: 'Steel blue accents and clean code aesthetic.', color: 'bg-blue-50 dark:bg-blue-900/40' },
+      { id: 'devops_scale', name: 'DevOps Scale', description: 'Compact display for infrastructure data.', color: 'bg-zinc-100 dark:bg-zinc-800' },
+    ]
   }
 ];
 
