@@ -16,7 +16,7 @@ const groq = new Groq({
 
   // Enable CORS for frontend connection
   app.use(cors({
-    origin: process.env.FRONTEND_URL || "*",
+    origin: "*", // Allow all origins to prevent Vercel/Render CORS friction
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
