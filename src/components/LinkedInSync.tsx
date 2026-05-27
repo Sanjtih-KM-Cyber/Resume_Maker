@@ -17,7 +17,7 @@ export const LinkedInSync: React.FC<LinkedInSyncProps> = ({ data }) => {
   const handleSync = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/linkedin', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/linkedin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

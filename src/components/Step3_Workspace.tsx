@@ -164,7 +164,7 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
     setIsGeneratingOutreach(true);
     setOutreachResult('');
     try {
-      const response = await fetch('/api/generate-outreach', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/generate-outreach`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
     setIsCopilotLoading(true);
 
     try {
-      const response = await fetch('/api/copilot', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/copilot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resumeData: data, userCommand: userMessage })
@@ -295,7 +295,7 @@ export const Step3_Workspace: React.FC<Step3Props> = ({ initialData }) => {
     const key = `${workIndex}-${highlightIndex}`;
     setPolishingState(prev => ({ ...prev, [key]: true }));
     try {
-      const response = await fetch('/api/rephrase-bullet', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/rephrase-bullet`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
