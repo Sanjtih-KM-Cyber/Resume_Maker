@@ -85,7 +85,28 @@ export type TemplateId =
   | 'vibrant-azure'
   | 'coral-accent'
   | 'monochrome-minimal'
-  | 'forest-green-structure';
+  | 'forest-green-structure'
+  | 'vibrant_creative'
+  | 'editorial_modern'
+  | 'startup_bold'
+  | 'minimal_pop'
+  | 'compact_hybrid'
+  | 'fresh_canvas'
+  | 'boardroom_elite'
+  | 'global_enterprise'
+  | 'mergers_acquisitions'
+  | 'sovereign_governance'
+  | 'eminent_authority'
+  | 'strategic_scale'
+  | 'operational_excellence'
+  | 'cross_functional'
+  | 'p_l_champion'
+  | 'agile_transformation'
+  | 'faang_optimized'
+  | 'matrix_functional'
+  | 'systems_architect'
+  | 'algorithmic_clean'
+  | 'devops_scale';
 
 export interface InterviewCompany {
   companyName: string;
