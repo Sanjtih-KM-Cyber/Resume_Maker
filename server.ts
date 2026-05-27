@@ -48,12 +48,11 @@ ${resumeText}`;
       });
 
       const text = response.choices[0]?.message?.content || "{}";
-      let parsed;
+            let parsed;
       try {
         parsed = JSON.parse(text);
       } catch (e) {
-        // Fallback robust json extraction if Groq adds markdown formatting like ```json
-        const jsonMatch = text.match(/\{.*\}/s);
+        const jsonMatch = text.match(/[\[\{].*[\]\}]/s);
         if (jsonMatch) {
           try {
              parsed = JSON.parse(jsonMatch[0]);
@@ -181,11 +180,11 @@ You MUST return a JSON object with the following structure:
       });
       
       const text = response.choices[0]?.message?.content || "{}";
-      let parsed;
+            let parsed;
       try {
         parsed = JSON.parse(text);
       } catch (e) {
-        const jsonMatch = text.match(/\{.*\}/s);
+        const jsonMatch = text.match(/[\[\{].*[\]\}]/s);
         if (jsonMatch) {
           try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
         } else {
@@ -230,11 +229,11 @@ Ensure you return a JSON object that matches the structure of the input JSON Res
       });
       
       const text = response.choices[0]?.message?.content || "{}";
-      let parsed;
+            let parsed;
       try {
         parsed = JSON.parse(text);
       } catch (e) {
-        const jsonMatch = text.match(/\{.*\}/s);
+        const jsonMatch = text.match(/[\[\{].*[\]\}]/s);
         if (jsonMatch) {
           try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
         } else {
@@ -263,7 +262,18 @@ Return a JSON object with a single key "metrics" which is an array of 5 strings.
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
-      const parsed = JSON.parse(response.choices[0]?.message?.content || "{}");
+      let parsed;
+      try {
+        parsed = JSON.parse(response.choices[0]?.message?.content || "{}");
+      } catch (e) {
+        const text = response.choices[0]?.message?.content || "{}";
+        const jsonMatch = text.match(/[\[\{].*[\]\}]/s);
+        if (jsonMatch) {
+          try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
+        } else {
+          parsed = {};
+        }
+      }
       res.json(parsed.metrics || []);
     } catch (error: any) {
       console.error(error);
@@ -342,7 +352,19 @@ Return a JSON object with 'headline' and 'about' properties.`;
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
-      res.json(JSON.parse(response.choices[0]?.message?.content || "{}"));
+      let parsed;
+      try {
+        parsed = JSON.parse(response.choices[0]?.message?.content || "{}");
+      } catch (e) {
+        const text = response.choices[0]?.message?.content || "{}";
+        const jsonMatch = text.match(/[\[\{].*[\]\}]/s);
+        if (jsonMatch) {
+          try { parsed = JSON.parse(jsonMatch[0]); } catch(e2) { parsed = {}; }
+        } else {
+          parsed = {};
+        }
+      }
+      res.json(parsed);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });

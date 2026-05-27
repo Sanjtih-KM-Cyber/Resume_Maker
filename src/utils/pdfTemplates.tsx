@@ -881,7 +881,7 @@ const AtsMaxTemplate = ({ data }: { data: ResumeData }) => (
 // 15. Neo Brutalism
 const NeoBrutalismTemplate = ({ data }: { data: ResumeData }) => (
   <Page wrap={true} size="A4" style={{ ...styles.page, padding: 30, backgroundColor: '#fdfbc8' }}>
-    <View style={{ border: 3, borderColor: '#000', padding: 20, backgroundColor: '#fff', boxShadow: '5 5 0 #000', marginBottom: 20 }}>
+    <View style={{ border: 3, borderColor: '#000', padding: 20, backgroundColor: '#fff',  marginBottom: 20 }}>
       <Text style={{ fontSize: 32, fontFamily: 'Helvetica-Bold', color: '#000', textTransform: 'uppercase' }}>{data.contactInfo.fullName}</Text>
       <Text style={{ fontSize: 14, fontFamily: 'Helvetica-Bold', color: '#ff3b3b', marginTop: 5, backgroundColor: '#000', padding: 4, alignSelf: 'flex-start' }}>{data.contactInfo.targetTitle}</Text>
       <View style={{ flexDirection: 'row', gap: 10, marginTop: 15, flexWrap: 'wrap' }}>
@@ -944,7 +944,7 @@ import {
 
 export const ResumeDocument = ({ data, templateId }: { data: ResumeData; templateId: TemplateId }) => {
   return (
-    <Document wrap={true}>
+    <Document>
       {templateId === 'reverse-chronological' && <ModernTemplate data={data} />}
       {templateId === 'minimalist' && <MinimalistTemplate data={data} />}
       {templateId === 'executive' && <ExecutiveTemplate data={data} />}
