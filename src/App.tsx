@@ -39,7 +39,7 @@ export default function App() {
     try {
       setExtractedData({ resumeText, targetRole, pictureBase64 });
       
-      const res = await fetch('/api/analyze', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resumeText, targetRole })
@@ -68,7 +68,7 @@ export default function App() {
 
       const currentData = overrideData || extractedData;
 
-      const res = await fetch('/api/generate', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

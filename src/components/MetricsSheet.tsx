@@ -17,7 +17,7 @@ export const MetricsSheet: React.FC<MetricsSheetProps> = ({ targetRole, onInject
     setIsLoading(true);
     setIsOpen(true);
     try {
-      const res = await fetch('/api/metrics', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/metrics`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ targetRole })

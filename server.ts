@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import Groq from "groq-sdk";
 import * as dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
@@ -13,6 +14,12 @@ const groq = new Groq({
   const app = express();
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
+  // Enable CORS for frontend connection
+  app.use(cors({
+    origin: process.env.FRONTEND_URL || "*",
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
   app.use(express.json({ limit: '50mb' }));
 
   // API Route: Analyze (Generates missing metrics/follow-up questions)
