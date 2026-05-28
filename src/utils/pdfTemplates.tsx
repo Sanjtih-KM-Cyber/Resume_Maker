@@ -964,7 +964,7 @@ const VibrantCreative = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#EA580C', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1040,7 +1040,7 @@ const EditorialModern = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#E11D48', borderBottomWidth: 1, borderBottomColor: '#E11D48', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1095,7 +1095,7 @@ const StartupBold = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0D9488', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1171,7 +1171,7 @@ const MinimalPop = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#D97706', borderBottomWidth: 1, borderBottomColor: '#D97706', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1226,7 +1226,7 @@ const CompactHybrid = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C026D3', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1302,7 +1302,7 @@ const FreshCanvas = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#059669', borderBottomWidth: 1, borderBottomColor: '#059669', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1357,7 +1357,7 @@ const BoardroomElite = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E293B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1423,7 +1423,7 @@ const GlobalEnterprise = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E1B4B', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1499,7 +1499,7 @@ const MergersAcquisitions = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#064E3B', borderBottomWidth: 1, borderBottomColor: '#064E3B', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1554,7 +1554,7 @@ const SovereignGovernance = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#374151', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1620,7 +1620,7 @@ const EminentAuthority = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#3F3F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1686,7 +1686,7 @@ const StrategicScale = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#334155', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1752,7 +1752,7 @@ const OperationalExcellence = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1828,7 +1828,7 @@ const CrossFunctional = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#312E81', borderBottomWidth: 1, borderBottomColor: '#312E81', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1883,7 +1883,7 @@ const PLChampion = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#065F46', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -1949,7 +1949,7 @@ const AgileTransformation = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#4B5563', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -2015,7 +2015,7 @@ const FaangOptimized = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0F172A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 10 }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 10 }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -2091,7 +2091,7 @@ const MatrixFunctional = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#164E63', borderBottomWidth: 1, borderBottomColor: '#164E63', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -2146,7 +2146,7 @@ const SystemsArchitect = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#075985', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -2212,7 +2212,7 @@ const AlgorithmicClean = ({ data }: { data: ResumeData }) => (
 
     <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#1E3A8A', borderBottomWidth: 1, borderBottomColor: '#EEEEEE', paddingBottom: 4, marginBottom: 10, textTransform: 'uppercase' }}>Professional Experience</Text>
     {data.workExperience.map((job, idx) => (
-      <View key={idx} style={{ marginBottom: 15,  }}>
+      <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15,  }}>
         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
           <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{job.roleTitle}</Text>
           <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>
@@ -2288,7 +2288,7 @@ const DevopsScale = ({ data }: { data: ResumeData }) => (
 
       <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#27272A', borderBottomWidth: 1, borderBottomColor: '#27272A', paddingBottom: 5, marginBottom: 10 }}>EXPERIENCE</Text>
       {data.workExperience.map((job, idx) => (
-        <View key={idx} style={{ marginBottom: 15 }}>
+        <View key={idx} break={job.pageBreakBefore || false} style={{ marginBottom: 15 }}>
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#333333' }}>{job.roleTitle}</Text>
             <Text style={{ fontSize: 10, color: '#666666' }}>{job.dates}</Text>

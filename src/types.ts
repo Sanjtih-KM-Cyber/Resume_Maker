@@ -4,6 +4,7 @@ export interface WorkExperience {
   dates: string;
   location: string;
   bullets: string[];
+  pageBreakBefore?: boolean;
 }
 
 export interface Education {
