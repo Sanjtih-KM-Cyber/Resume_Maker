@@ -90,7 +90,7 @@ export const Step1_Upload: React.FC<Step1Props> = ({ onComplete }) => {
     >
       <div className="mb-8 text-center mt-4">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-          Bypass the <span className="text-indigo-600 dark:text-indigo-400">ATS Bot</span>
+          Give your Resume <span className="text-indigo-600 dark:text-indigo-400"> a new ATS friendly look</span>
         </h1>
         <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
           Upload your raw background data and target role. We'll extract, analyze, and generate an ATS-optimized standard formatting.
